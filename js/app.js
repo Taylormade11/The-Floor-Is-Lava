@@ -19,12 +19,12 @@ function SpriteChar(xPos, yPos, width, height) {
   ctx.fillRect(this.x, this.y, this.width, this.height);
 }
 
-document.addEventListener('keydown', keyDownHandler, false);
-document.addEventListener('keyup', keyUpHandler, false);
-
 var spacePressed = false;
 var leftPressed = false;
 var rightPressed = false;
+
+document.addEventListener('keydown', keyDownHandler, false);
+document.addEventListener('keyup', keyUpHandler, false);
 
 function keyDownHandler(event) {
   if (event.keyCode === 32) {
@@ -36,5 +36,18 @@ function keyDownHandler(event) {
   } else if (event.keyCode === 39) {
     rightPressed = true;
     console.log('right pressed');
+  }
+}
+
+function keyUpHandler(event) {
+  if (event.keyCode === 32) {
+    spacePressed = false;
+    console.log('space released');
+  } else if (event.keyCode === 37) {
+    leftPressed = false;
+    console.log('left released');
+  } else if (event.keyCode === 39) {
+    rightPressed = false;
+    console.log('right released');
   }
 }
