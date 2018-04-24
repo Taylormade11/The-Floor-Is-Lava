@@ -1,6 +1,6 @@
 (function(){
   //select the id for canvas to draw to
-  var canvas = document.getElementById('canvas');
+  var canvas = document.getElementById('game-screen');
   //sest the context of the canvas to 2d
   var context = canvas.getContext('2d');
   // size of the tiles (platforms) to be drawn
@@ -50,9 +50,9 @@
   function renderLevel(){
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle='#000000';
-    for(i=0; i < levelRow; i++){
-      for(j=0; j <levelColumn; j++){
-        if(levelMap[i][j]==1){
+    for(var i=0; i < levelRow; i++){
+      for(var j=0; j <levelColumn; j++){
+        if(levelMap[i][j]===1){
           context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
         }
       }

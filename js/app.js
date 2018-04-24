@@ -122,7 +122,7 @@ function updateGameArea() {
     sideways.play();}
   if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
     sideways.play();}
-  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
     jump.play();
     jumpDelay += 1200;
@@ -135,7 +135,6 @@ function updateGameArea() {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
-
   CreateFloor(7150, 40, 0, 560);
 
   // Looks for a collision with the floor each update loop (25ms);
