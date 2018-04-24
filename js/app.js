@@ -118,3 +118,40 @@ function updateGameArea() {
 }
 
 startGame();
+
+var canvas = document.getElementById("game-screen");
+var ctx = canvas.getContext("2d");
+var cw = canvas.width;
+var ch = canvas.height;
+
+
+var timers = [];
+timers.push({ nextFireTime: 0, doFunction: doTimers, counter: 0 });
+
+
+requestAnimationFrame(timerLoop);
+
+function timerLoop(currentTime) {
+  requestAnimationFrame(timerLoop);
+
+  for (var i = 0; i < timers.length; i++) {
+    if (currentTime > timers[i].nextFireTime) {
+      var t = timers[i];
+      t.nextFireTime = currentTime 
+      t.doFunction(t, i);
+    }
+  }
+
+}
+
+function doTimers(t, i) {
+  ctx.clearRect(0, 100 + i * 20 - 20, cw, 20);
+  ctx.fillText('Your Time is' + '.' + i + '.' +  + (++t.counter) + ' seconds.', 20, 100 + 20 * i);
+}
+
+
+
+
+
+
+
