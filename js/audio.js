@@ -33,10 +33,3 @@ window.onkeypress = function() {
 //     }
 //   });
 // };
-
-
-// var i = 0;
-// while(i < 40){
-//   i++;
-//   test.play();
-// } 32, 37, 39 are key chars
