@@ -1,0 +1,28 @@
+nav{
+float: right;
+
+}
+
+/* Instructions Text */
+#instructions{
+padding: 122px;
+width: 110px;
+float: right;
+background-color: blue;
+}
+
+
+/* Scroll for Instructions */
+.scroll{
+width: 110px;
+height: 110px;
+overflow: scroll;
+}
+
+
+/* Game Screen */
+canvas{
+  padding-left: 30%;
+  padding-right: 0;
+  
+}
