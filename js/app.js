@@ -26,18 +26,25 @@ function SpriteChar(xPos, yPos, width, height) {
 var player = new SpriteChar(canvas.width / 2, canvas.height / 2, 30, 30);
 
 // Handles user pressing a key
+// Prevents default action of keypress (scrolling within the window)
 function keyDownHandler(event) {
 
   // Checks which key is being pressed
   if (event.keyCode === 32) {
     spacePressed = true;
     console.log('space pressed');
+
+    event.preventDefault();
   } else if (event.keyCode === 37) {
     leftPressed = true;
     console.log('left pressed');
+
+    event.preventDefault();
   } else if (event.keyCode === 39) {
     rightPressed = true;
     console.log('right pressed');
+
+    event.preventDefault();
   }
 
   // Updates character sprite's x/y coordinates
