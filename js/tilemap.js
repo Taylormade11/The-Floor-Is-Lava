@@ -43,7 +43,7 @@
     for(i=0; i < levelRow; i++){
       for(j=0; j <levelColumn; j++){
         if(levelMap[i][j]==1){
-          context.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+          context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
         }
       }
     }
