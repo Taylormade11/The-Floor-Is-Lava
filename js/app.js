@@ -170,37 +170,6 @@ function updateGameArea() {
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
   var colOverlap = ourSpriteCharacter.x%tileSize;
   var rowOverlap = ourSpriteCharacter.y%tileSize;
-
-  if(ourSpriteCharacter.speedX>0){
-    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=baseCol*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
-    }
-  }
-
-  if(ourSpriteCharacter.speedX<0){
-    if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=(baseCol+1)*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
-    }
-  }
-
-  // checking for vertical collisions in downward but not upwards so we can jump through them.
-
-  baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
-  baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  colOverlap = ourSpriteCharacter.x%tileSize;
-  rowOverlap = ourSpriteCharacter.y%tileSize;
-
-  if(ourSpriteCharacter.speedY<0){
-    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y = baseRow*tileSize;
-      ourSpriteCharacter.gravity = 0;
-      ourSpriteCharacter.gravitySpeed = 0;
-      ourSpriteCharacter.speedY = 0;
-    }
-  }
-
   if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
     sideways.play(); }
   if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
@@ -226,7 +195,35 @@ function updateGameArea() {
 
   // Looks for a collision with the floor each update loop (25ms);
   collision();
+
+  if(ourSpriteCharacter.speedX>0){
+    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=baseCol*tileSize;
+      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
+    }
+  }
+
+  if(ourSpriteCharacter.speedX<0){
+    if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=(baseCol+1)*tileSize;
+      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
+    }
+  }
+
+  // checking for vertical collisions in downward but not upwards so we can jump through them.
+
+  baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  colOverlap = ourSpriteCharacter.x%tileSize;
+  rowOverlap = ourSpriteCharacter.y%tileSize;
+
+  if(ourSpriteCharacter.speedY<=0 && !gameScreen.pressed[32]){
+    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
+      ourSpriteCharacter.y=(baseCol+1)*tileSize;
+    }
+  }
 }
+
 
 startGame();
 renderLevel();
