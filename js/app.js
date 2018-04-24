@@ -4,6 +4,10 @@ var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
 var paused = false; // Game starts in a paused state
+
+var sideways = new Audio('audio/jump.wav');
+var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 
 function startGame() {
@@ -31,7 +35,7 @@ var gameScreen = {
     this.canvas.width = 750;
     this.canvas.height = 600;
     this.context = this.canvas.getContext('2d');
-    this.interval = setInterval(updateGameArea, 30);
+    this.interval = setInterval(updateGameArea, 16);
     window.addEventListener('keydown', function (event) {
       event.preventDefault();
       gameScreen.pressed = (gameScreen.pressed || []);
@@ -63,7 +67,7 @@ function Sprite(width, height, x, y) {
   this.y = y;
   this.speedX = 0;
   this.speedY = 0;
-  this.gravity = 0.2;
+  this.gravity = 0.15;
   this.gravitySpeed = .01;
   this.update = function() {
     var ctx = gameScreen.context;
@@ -110,13 +114,18 @@ function togglePause() {
 
 function updateGameArea() {
   gameScreen.clear();
-  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5; }
-  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5; }
+  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+    sideways.play(); }
+  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+    sideways.play(); }
+  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+    sideways.play();}
+  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+    sideways.play();}
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
-    jumpDelay += 600;
+    jump.play();
+    jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
