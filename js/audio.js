@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use strict';
 
 window.onkeypress = function() {
@@ -15,3 +16,5 @@ window.onkeypress = function() {
   });
 };
 
+=======
+>>>>>>> 28c7f7ffac1618cf603fbda4b3003d9eb1b118b5
