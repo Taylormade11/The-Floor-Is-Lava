@@ -4,6 +4,10 @@ var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
 
+
+var sideways = new Audio('audio/jump.wav');
+var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 
 function startGame() {
@@ -99,12 +103,17 @@ function collision() {
 
 function updateGameArea() {
   gameScreen.clear();
-  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5; }
+  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+    sideways.play(); }
+  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+    sideways.play(); }
+  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+    sideways.play();}
+  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+    sideways.play();}
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
+    jump.play();
     jumpDelay += 600;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
