@@ -31,7 +31,7 @@ var gameScreen = {
     this.canvas.width = 750;
     this.canvas.height = 600;
     this.context = this.canvas.getContext('2d');
-    this.interval = setInterval(updateGameArea, 25);
+    this.interval = setInterval(updateGameArea, 30);
     window.addEventListener('keydown', function (event) {
       event.preventDefault();
       gameScreen.pressed = (gameScreen.pressed || []);
@@ -49,7 +49,7 @@ var gameScreen = {
   clear : function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height-70);
     if (jumpDelay > 0) {
-      jumpDelay -= 25;
+      jumpDelay -= 30;
     }
   }
 };
@@ -105,7 +105,7 @@ function updateGameArea() {
   if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5; }
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
-    jumpDelay += 400;
+    jumpDelay += 600;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
