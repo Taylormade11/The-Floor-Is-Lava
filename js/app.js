@@ -1,13 +1,16 @@
 'use strict';
 
-var img = new Image();
-img.src = 'img/velociraptor.svg';
-
 // Set attributes of canvas element
 var canvas = document.getElementById('game-screen');
 var ctx = canvas.getContext('2d');
 canvas.width = 750;
 canvas.height = 600;
+var spacePressed = false;
+var leftPressed = false;
+var rightPressed = false;
+
+document.addEventListener('keydown', keyDownHandler, false);
+document.addEventListener('keyup', keyUpHandler, false);
 
 // Constructor for character sprites
 function SpriteChar(xPos, yPos, width, height) {
@@ -22,34 +25,10 @@ function SpriteChar(xPos, yPos, width, height) {
 // Create new SpriteChar instance
 var player = new SpriteChar(canvas.width / 2, canvas.height / 2, 30, 30);
 
-
-
-/*
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  console.log(player);
-
-  if (spacePressed) {
-    player.y -= 1;
-  } else if (leftPressed) {
-    player.x -= 1;
-  } else if (rightPressed) {
-    player.x += 1;
-  }
-
-  ctx.drawImage(img, player.x, player.y);
-  requestAnimationFrame(draw);
-}
-*/
-
-var spacePressed = false;
-var leftPressed = false;
-var rightPressed = false;
-
-document.addEventListener('keydown', keyDownHandler, false);
-document.addEventListener('keyup', keyUpHandler, false);
-
+// Handles user pressing a key
 function keyDownHandler(event) {
+
+  // Checks which key is being pressed
   if (event.keyCode === 32) {
     spacePressed = true;
     console.log('space pressed');
@@ -61,10 +40,11 @@ function keyDownHandler(event) {
     console.log('right pressed');
   }
 
+  // Updates character sprite's x/y coordinates
   updatePlayer();
-//  draw();
 }
 
+// Handles user releasing a key
 function keyUpHandler(event) {
   if (event.keyCode === 32) {
     spacePressed = false;
@@ -78,6 +58,7 @@ function keyUpHandler(event) {
   }
 }
 
+// Updates character sprites' x/y coordinates
 function updatePlayer() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -85,7 +66,7 @@ function updatePlayer() {
   ctx.fillRect(player.x, player.y, player.width, player.height);
 
   if (spacePressed) {
-    player.y -= 5;
+    player.y -= 25;
   } else if (leftPressed) {
     player.x -= 5;
   } else if (rightPressed) {
