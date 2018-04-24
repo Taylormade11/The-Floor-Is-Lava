@@ -193,44 +193,59 @@ function updateGameArea() {
 }
 
 startGame();
-<<<<<<< HEAD
-
-var canvas = document.getElementById("game-screen");
-var ctx = canvas.getContext("2d");
-var cw = canvas.width;
-var ch = canvas.height;
-
-
-var timers = [];
-timers.push({ nextFireTime: 0, doFunction: doTimers, counter: 0 });
-
-
-requestAnimationFrame(timerLoop);
-
-function timerLoop(currentTime) {
-  requestAnimationFrame(timerLoop);
-
-  for (var i = 0; i < timers.length; i++) {
-    if (currentTime > timers[i].nextFireTime) {
-      var t = timers[i];
-      t.nextFireTime = currentTime 
-      t.doFunction(t, i);
-    }
-  }
-
-}
-
-function doTimers(t, i) {
-  ctx.clearRect(0, 100 + i * 20 - 20, cw, 20);
-  ctx.fillText('Your Time is' + '.' + i + '.' +  + (++t.counter) + ' seconds.', 20, 100 + 20 * i);
-}
-
-
-
-
-
-
-
-=======
 renderLevel();
->>>>>>> 28c7f7ffac1618cf603fbda4b3003d9eb1b118b5
+// In Game Timer
+// var canvas = document.getElementById('game-screen');
+// var ctx = canvas.getContext('2d');
+// var cw = canvas.width;
+// var ch = canvas.height;
+
+
+// var timers = [];
+// timers.push({ delay: 0, nextFireTime: 0, doFunction:doTimers, counter: 0 });
+
+
+// requestAnimationFrame(timerLoop);
+
+// function timerLoop(currentTime) {
+//   requestAnimationFrame(timerLoop);
+
+//   for (var i = 0; i < timers.length; i++) {
+//     if (currentTime > timers[i].nextFireTime) {
+//       var t = timers[i];
+//       t.nextFireTime = currentTime + t.delay;
+//       t.doFunction(t, i);
+//     }
+//   }
+
+// }
+
+// function doTimers(t, i) {
+//   ctx.clearRect(0, 100 + i * 20 - 20, cw, 20);
+//   ctx.fillText('Your Time Is' + '.' + i + '.'  + t.delay + (++t.counter) + ' Seconds.', 20, 100 + 20 * i);
+// }
+
+function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+    minutes = parseInt(timer / 60, 0)
+    seconds = parseInt(timer % 60, 0);
+
+    minutes = minutes < 0 ? "0" + minutes : minutes;
+    seconds = seconds < 0 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (--timer < 0) {
+      timer = duration;
+      
+      
+    }
+  }, 1000);
+}
+
+window.onkeyup = function () {
+  var twoMinutes = 60 * 2,
+    display = document.querySelector('#time');
+  startTimer(twoMinutes, display);
+};
