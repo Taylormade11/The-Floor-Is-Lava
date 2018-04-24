@@ -1,13 +1,13 @@
 'use strict';
 
+var img = new Image();
+img.src = 'img/velociraptor.svg';
+
 // Set attributes of canvas element
 var canvas = document.getElementById('game-screen');
 var ctx = canvas.getContext('2d');
 canvas.width = 750;
 canvas.height = 600;
-
-// Create new SpriteChar instance
-new SpriteChar(canvas.width / 2, canvas.height / 2, 30, 30);
 
 // Constructor for character sprites
 function SpriteChar(xPos, yPos, width, height) {
@@ -17,6 +17,25 @@ function SpriteChar(xPos, yPos, width, height) {
   this.y = yPos;
   ctx.fillStyle = 'red';
   ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+
+// Create new SpriteChar instance
+var player = new SpriteChar(canvas.width / 2, canvas.height / 2, 30, 30);
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  console.log(player);
+
+  if (spacePressed) {
+    player.y -= 1;
+  } else if (leftPressed) {
+    player.x -= 1;
+  } else if (rightPressed) {
+    player.x += 1;
+  }
+
+  ctx.drawImage(img, player.x, player.y);
+  requestAnimationFrame(draw);
 }
 
 var spacePressed = false;
@@ -37,6 +56,8 @@ function keyDownHandler(event) {
     rightPressed = true;
     console.log('right pressed');
   }
+
+  draw();
 }
 
 function keyUpHandler(event) {
