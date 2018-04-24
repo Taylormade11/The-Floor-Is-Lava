@@ -22,6 +22,9 @@ function SpriteChar(xPos, yPos, width, height) {
 // Create new SpriteChar instance
 var player = new SpriteChar(canvas.width / 2, canvas.height / 2, 30, 30);
 
+
+
+/*
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   console.log(player);
@@ -37,6 +40,7 @@ function draw() {
   ctx.drawImage(img, player.x, player.y);
   requestAnimationFrame(draw);
 }
+*/
 
 var spacePressed = false;
 var leftPressed = false;
@@ -57,7 +61,8 @@ function keyDownHandler(event) {
     console.log('right pressed');
   }
 
-  draw();
+  updatePlayer();
+//  draw();
 }
 
 function keyUpHandler(event) {
@@ -70,5 +75,20 @@ function keyUpHandler(event) {
   } else if (event.keyCode === 39) {
     rightPressed = false;
     console.log('right released');
+  }
+}
+
+function updatePlayer() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = 'red';
+  ctx.fillRect(player.x, player.y, player.width, player.height);
+
+  if (spacePressed) {
+    player.y -= 5;
+  } else if (leftPressed) {
+    player.x -= 5;
+  } else if (rightPressed) {
+    player.x += 5;
   }
 }
