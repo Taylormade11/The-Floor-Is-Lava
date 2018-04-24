@@ -30,3 +30,43 @@
     drawMap;
   };
 });
+
+(function(){
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var levelColumn = 11;
+  var levelRow = 15;
+
+  var levelMap = [
+    [1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1]
+  ];
+
+  canvas.width=tileSize * levelColumn;
+  canvas.height=tileSize * levelRow;
+
+  renderLevel();
+
+  function renderLevel(){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle='#000000';
+    for(i=0; i < levelRow; i++){
+      for(j=0; j <levelColumn; j++){
+        if(levelMap)
+      }
+    }
+  }
+}
