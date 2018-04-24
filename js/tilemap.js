@@ -2,7 +2,7 @@
 
   var buffer, context, drawMap, map, size;
 
-//buffer to allow for resizing without breaks in images
+  //buffer to allow for resizing without breaks in images
   buffer = document.createElement('canvas').getContext('2d');
   context = document.querySelector('canvas').getContext('2d');
 
