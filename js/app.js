@@ -3,6 +3,7 @@
 var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
+var paused = false; // Game starts in a paused state
 
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
@@ -98,6 +99,17 @@ function collision() {
   }
 }
 
+// Toggle between paused and un-paused game states with "p"
+function togglePause() {
+  if (!paused && gameScreen.pressed[80]) {
+    paused = true;
+    console.log('paused');
+  } else if (paused && gameScreen.pressed[80]) {
+    paused = false;
+    console.log('unpaused');
+  }
+}
+
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 
 function updateGameArea() {
@@ -116,9 +128,13 @@ function updateGameArea() {
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
-  if (gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
-  ourSpriteCharacter.updatedPosition();
-  ourSpriteCharacter.update();
+  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
+
+  togglePause();
+  if (paused === false) {
+    ourSpriteCharacter.updatedPosition();
+    ourSpriteCharacter.update();
+  }
   CreateFloor(7150, 40, 0, 560);
 
   // Looks for a collision with the floor each update loop (25ms);
