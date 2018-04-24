@@ -3,7 +3,7 @@
 var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
-
+var paused = false; // Game starts in a paused state
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 
 function startGame() {
@@ -95,22 +95,38 @@ function collision() {
   }
 }
 
+// Toggle between paused and un-paused game states with "p"
+function togglePause() {
+  if (!paused && gameScreen.pressed[80]) {
+    paused = true;
+    console.log('paused');
+  } else if (paused && gameScreen.pressed[80]) {
+    paused = false;
+    console.log('unpaused');
+  }
+}
+
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 
 function updateGameArea() {
   gameScreen.clear();
-  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5; }
-  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5; }
+  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5; }
+  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5; }
+  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5; }
+  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5; }
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
     jumpDelay += 600;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
-  ourSpriteCharacter.updatedPosition();
-  ourSpriteCharacter.update();
+
+  togglePause();
+  if (paused === false) {
+    ourSpriteCharacter.updatedPosition();
+    ourSpriteCharacter.update();
+  }
+
   CreateFloor(7150, 40, 0, 560);
 
   // Looks for a collision with the floor each update loop (25ms);
