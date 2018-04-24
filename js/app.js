@@ -102,21 +102,21 @@ function collision() {
 
 function updateGameArea() {
   gameScreen.clear();
-  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
     sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
     sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
     sideways.play();}
-  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
     sideways.play();}
-  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
     jump.play();
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
-  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
+  if (gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
   ourSpriteCharacter.updatedPosition();
   ourSpriteCharacter.update();
   CreateFloor(7150, 40, 0, 560);
