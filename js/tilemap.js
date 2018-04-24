@@ -6,8 +6,8 @@
   // size of the tiles (platforms) to be drawn
   var tileSize = 30;
   // variable for size of columns and rows on levelMap
-  var levelColumn = 11;
-  var levelRow = 15;
+  var levelColumn = 25;
+  var levelRow = 20;
 
   // tile map for level 1 is black block rest are white
   var levelMap = [
