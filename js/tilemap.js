@@ -6,8 +6,8 @@
   // size of the tiles (platforms) to be drawn
   var tileSize = 30;
   // variable for size of columns and rows on levelMap
-  var levelColumn = 20;
-  var levelRow = 25;
+  var levelColumn = 25;
+  var levelRow = 20;
 
   // tile map for level 1 is black block rest are white
   var levelMap = [
@@ -50,9 +50,9 @@
   function renderLevel(){
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle='#000000';
-    for(i=0; i < levelRow; i++){
-      for(j=0; j <levelColumn; j++){
-        if(levelMap[i][j]==1){
+    for(var i=0; i < levelRow; i++){
+      for(var j=0; j <levelColumn; j++){
+        if(levelMap[i][j]===1){
           context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
         }
       }

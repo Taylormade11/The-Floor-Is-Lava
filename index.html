@@ -6,26 +6,29 @@
       <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <header>
+      <h1>Welcome to The Floor is Lava!</h1>
       <nav>
         <button><a href="index.html" id="home">Home</a></button>
         <button><a href="about-us.html" id="about-us">About Us</a></button>
         <button><a href="high-score.html" id="game-stats">Game Stats</a></button>
       </nav>
-      <h1>Welcome to The Floor is Lava!</h1>
     </header>
     <body>
       <div id="container">
-        <canvas id="game-screen">
-        </canvas>
+        <canvas id="game-screen"></canvas>
+        <audio controls autoplay="autoplay" loop="loop">
+          <source src="audio/BoxCat_Games_-_12_-_Passing_Time.mp3" type="audio/mpeg">
+        </audio>
         <aside id="instructions">
           <h2>Description of Game/Instructions</h2>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum hic facilis odit, minima ea aspernatur tempore corrupti maiores magni. Porro pariatur nobis cumque quia alias provident perspiciatis, officia molestias ipsa.</p>
         </aside>
       </div>
-    <script src="Js/apps.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
     </body>
     <footer>
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum hic facilis odit, minima ea aspernatur tempore corrupti maiores magni. Porro pariatur nobis cumque quia alias provident perspiciatis, officia molestias ipsa.</p>
+      <script src="js/app.js"></script>
+      <script src="js/audio.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
     </footer>
   </html>
