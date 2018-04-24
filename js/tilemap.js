@@ -1,13 +1,13 @@
 (function(){
   //select the id for canvas to draw to
-  var canvas = document.getElementById('canvas');
+  var canvas = document.getElementById('game-screen');
   //sest the context of the canvas to 2d
   var context = canvas.getContext('2d');
   // size of the tiles (platforms) to be drawn
   var tileSize = 30;
   // variable for size of columns and rows on levelMap
-  var levelColumn = 11;
-  var levelRow = 15;
+  var levelColumn = 20;
+  var levelRow = 25;
 
   // tile map for level 1 is black block rest are white
   var levelMap = [
@@ -31,9 +31,9 @@
     [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
+    [1,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
+    [1,1,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1],
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
   ];
