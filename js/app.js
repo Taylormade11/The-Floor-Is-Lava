@@ -4,7 +4,6 @@ var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
 
-
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
