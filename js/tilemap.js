@@ -1,42 +1,15 @@
 (function(){
-
-  var buffer, context, drawMap, map, size;
-
-  //buffer to allow for resizing without breaks in images
-  buffer = document.createElement('canvas').getContext('2d');
-  context = document.querySelector('canvas').getContext('2d');
-
-  map = [1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,];
-
-  size = 4;
-
-  // set buffer values to the size of tilemap dimension
-  buffer.canvas.width = 11;
-  buffer.canvas.heigth = 4;
-
-  drawMap = function (){
-    for (let index = 0; index < map.length; index++){
-      //draw a black tile for 1s and white for anythng else
-      buffer.fillStyle = (map[index]===1)?'#000000':'#ffffff';
-      buffer.fillRect((index % 11) * size, Math.floor(index/11) * size, size, size, size);
-    }
-
-    context.drawImage(buffer.canvas, 0, 0, buffer.canvas.width, buffer.canvas.height);
-
-    drawMap;
-  };
-});
-
-(function(){
+  //select the id for canvas to draw to
   var canvas = document.getElementById('canvas');
+  //sest the context of the canvas to 2d
   var context = canvas.getContext('2d');
+  // size of the tiles (platforms) to be drawn
+  var tileSize = 30;
+  // variable for size of columns and rows on levelMap
   var levelColumn = 11;
   var levelRow = 15;
 
+  // tile map for level 1 is black block rest are white
   var levelMap = [
     [1,1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,0,0,0,0,0,0,1],
@@ -55,18 +28,24 @@
     [1,1,1,1,1,1,1,1,1,1,1]
   ];
 
+  //sets the canvas size to match levelMap size... i think this helps with
+  // anti aliasing / rendering issues with browser resizing (we can change level rows and columns to suit our needs)
   canvas.width=tileSize * levelColumn;
   canvas.height=tileSize * levelRow;
 
+  //calling function to render the map
   renderLevel();
 
+  // the function to render level. first clears map, sets fillstyle to black boxes (later .png locations for textures / assets)
   function renderLevel(){
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle='#000000';
     for(i=0; i < levelRow; i++){
       for(j=0; j <levelColumn; j++){
-        if(levelMap)
+        if(levelMap[i][j]==1){
+          context.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+        }
       }
     }
   }
-}
+})();
