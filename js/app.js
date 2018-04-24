@@ -3,8 +3,11 @@
 var ourSpriteCharacter;
 var gameFloors;
 var canvas = document.getElementById('game-screen');
-
+// HighScore.parsedHighScore = JSON.parse(localStorage.getItem);
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
+
+//var thud = new Audio('audio/thud.wav');
+
 
 function startGame() {
   ourSpriteCharacter = new Sprite(30, 30, canvas.width / 2, canvas.height / 2);
@@ -88,6 +91,7 @@ function Sprite(width, height, x, y) {
 function collision() {
   if (ourSpriteCharacter.y > 560) {
     console.log('sorry you hit the lava, you lose');
+    _Audio.thud.play();
     gameScreen.stop();
     alert('sorry you hit the lava, you lose');
   } else {
