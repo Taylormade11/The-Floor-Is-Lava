@@ -3,15 +3,9 @@
   width: 600px;
 }
 
-#container{
-  /* border: solid; */
- 
-  
-
-}
-
+/* Header Line */
 #flex-box{
-border: 1px solid black;
+border: 10px solid; color: transparent;
 
 }
 
