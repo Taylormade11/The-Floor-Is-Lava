@@ -1,9 +1,28 @@
 'use strict';
 
+
+var startScore = 2000000;
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
 var context = canvas.getContext('2d');
+
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which ===83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
+        var display = document.getElementById('time');
+        display.textContent = secs + ' seconds ' + score;
+        console.log(score);
+      }, 1000);
+    }
+  });
+};
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -49,7 +68,7 @@ function renderLevel(){
 var ourSpriteCharacter;
 var paused = false; // Game starts in a paused state
 
-var thud = new Audio('audio/jump.wav');
+var beep = new Audio('audio/jump.wav');
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
@@ -134,7 +153,7 @@ function lavaCollision() {
   if (ourSpriteCharacter.y > (canvas.height - (tileSize + ourSpriteCharacter.height))) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
-    thud.play();
+    beep.play();
     alert('sorry you hit the lava, you lose');
   } else {
     console.log('no lavaCollision detected yet');
@@ -143,7 +162,7 @@ function lavaCollision() {
 
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
-  if (!paused && gameScreen.pressed[80]) {
+  if (!paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     console.log('paused');
   } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
@@ -151,6 +170,7 @@ function togglePause() {
     console.log('unpaused');
   }
 }
+
 
 // Declares the input keys and characteristics for sprite movement - called within updateGameArea
 function spriteMovement() {
@@ -170,6 +190,13 @@ function spriteMovement() {
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
 }
+
+// updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
+
+
+function updateGameArea() {
+  renderLevel();
+  gameScreen.clear();
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
@@ -192,6 +219,12 @@ function updateGameArea() {
 
   // Looks for a lavaCollision each update loop (25ms);
   lavaCollision();
+
+  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  var colOverlap = ourSpriteCharacter.x%tileSize;
+  var rowOverlap = ourSpriteCharacter.y%tileSize;
+
 
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
@@ -219,4 +252,3 @@ function updateGameArea() {
 }
 
 startGame();
-renderLevel();
