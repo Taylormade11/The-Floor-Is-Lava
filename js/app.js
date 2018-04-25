@@ -1,5 +1,20 @@
 'use strict';
 
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which === 83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
+        var display = document.getElementById('time');
+        display.textContent = secs + ' seconds ' + score;
+        console.log(score);
+      }, 1000);
+    }
+  });
+};
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
