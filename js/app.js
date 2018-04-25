@@ -120,12 +120,6 @@ function Sprite(width, height, x, y) {
     this.x += this.speedX;
     this.gravitySpeed += this.gravity;
     this.y += this.speedY + this.gravitySpeed;
-    // Trying to control/set a limit on how fast sprite can travel in y axis up and down. But once it reaches that speed it stays that speed and won't change direction. Need to go about differently, possibly globally
-    // if (this.speedY >= 7) {
-    //   this.speedY = 7;
-    // } else if (this.speedY <= -50) {
-    //   this.speedY = -50;
-    // }
   };
 }
 
