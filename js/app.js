@@ -7,11 +7,11 @@ var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
-window.onload = function () {
+window.onload = function() {
   var secs = 0;
-  document.addEventListener('keydown', function (keyInput) {
-    if (keyInput.which === 83) {
-      setInterval(function () {
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which ===83) {
+      setInterval(function(){
         secs++; console.log(secs);
         var score = startScore - (secs * 50000);
         var display = document.getElementById('time');
@@ -29,58 +29,49 @@ var levelColumn = 25;
 var levelRow = 20;
 
 var jumpDelay = 0;
-var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
-  [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-  [1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2],
+  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,2,2,2],
+  [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
+  [1,1,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
-function renderLevel() {
+function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
-
-  context.fillStyle = '#000000';
-  for (var i = 0; i < levelRow; i++) {
-    for (var j = 0; j < levelColumn; j++) {
-      if (levelMap[i][j] === 1) {
-        context.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
-
   var tileSrc = document.getElementById('tiles');
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===1){
         context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-
       }
     }
   }
 }
 
-function renderblue() {
-  context.fillStyle = '#00FFFF';
-  for (var i = 0; i < levelRow; i++) {
-    for (var j = 0; j < levelColumn; j++) {
-      if (levelMap[i][j] === 2) {
-        context.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+function renderblue(){
+  context.fillStyle='#00FFFF';
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j <levelColumn; j++){
+      if(levelMap[i][j]===2){
+        context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -115,8 +106,8 @@ function CreateFloor(width, height, x, y) {
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
 var gameScreen = {
-  canvas: document.getElementById('game-screen'),
-  start: function () {
+  canvas : document.getElementById('game-screen'),
+  start : function() {
     this.canvas.width = 750;
     this.canvas.height = 600;
     this.context = this.canvas.getContext('2d');
@@ -131,22 +122,14 @@ var gameScreen = {
       gameScreen.pressed[event.keyCode] = (event.type === 'keydown');
     });
   },
-  stop: function () {
+  stop : function() {
     clearInterval(this.interval);
   },
 
   // clears the entire canvas except for the floor area & a little bit above it, smears the block on diagonal descent, but preserves the block for now.
-
-  clear: function () {
-    // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
   clear : function() {
-
     if (jumpDelay > 0) {
       jumpDelay -= 30;
-    }
-    if (pauseDelay > 0) {
-      pauseDelay -= 30;
     }
   }
 };
@@ -160,12 +143,12 @@ function Sprite(width, height, x, y) {
   this.speedX = 0;
   this.speedY = 0;
   this.gravity = 4;
-  this.update = function () {
+  this.update = function() {
     var ctx = gameScreen.context;
     ctx.fillStyle = 'black';
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
-  this.updatedPosition = function () {
+  this.updatedPosition = function() {
     this.x += this.speedX;
     this.y += this.speedY + this.gravity;
   };
@@ -191,37 +174,14 @@ function cielCollision() {
 
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
-  if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
+  if (!paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
-    pauseDelay += 1200;
     console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+  } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
-    pauseDelay += 300;
     console.log('unpaused');
   }
 }
-
-
-// updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
-
-function updateGameArea() {
-  renderLevel();
-  renderblue();
-  gameScreen.clear();
-  if (gameScreen.pressed && gameScreen.pressed[37]) {
-    ourSpriteCharacter.speedX = -3;
-    sideways.play();
-  }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {
-    ourSpriteCharacter.speedX = -3;
-    sideways.play();
-  }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {
-    ourSpriteCharacter.speedX = 3;
-    sideways.play();
-  }
-  if (gameScreen.pressed && gameScreen.pressed[68]) {
 
 function spriteMovement() {
   if (gameScreen.pressed && (gameScreen.pressed[37] || gameScreen.pressed[65])) {
@@ -229,7 +189,6 @@ function spriteMovement() {
     sideways.play();
   }
   if (gameScreen.pressed && (gameScreen.pressed[39] || gameScreen.pressed[68])) {
-
     ourSpriteCharacter.speedX = 3;
     sideways.play();
   }
@@ -241,8 +200,6 @@ function spriteMovement() {
   } else {
     ourSpriteCharacter.speedY = 0;
   }
-
-
 }
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
@@ -252,7 +209,6 @@ function updateGameArea() {
   gameScreen.clear();
 
   spriteMovement();
-
 
   togglePause();
   if (paused === false) {
@@ -268,46 +224,34 @@ function updateGameArea() {
   // Looks for a lavaCollision with the floor each update loop (25ms);
   lavaCollision();
 
-  var baseCol = Math.floor(ourSpriteCharacter.x / tileSize);
-  var baseRow = Math.floor(ourSpriteCharacter.y / tileSize);
+  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
   var colOverlap = ourSpriteCharacter.x % tileSize;
   var rowOverlap = ourSpriteCharacter.y % tileSize;
 
   // checking for vertical collisions downward but not upwards so we can jump through them.
-
-  if (ourSpriteCharacter.speedY <= 0) {
-    if ((levelMap[baseRow + 1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow + 1][baseCol + 1] && !levelMap[baseRow][baseCol + 1] && colOverlap)) {
-      ourSpriteCharacter.y = (baseRow) * tileSize;
-
   if(ourSpriteCharacter.speedY<=0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
       ourSpriteCharacter.y=(baseRow)*tileSize;
-
     }
   }
 
-  baseCol = Math.floor(ourSpriteCharacter.x / tileSize);
-  baseRow = Math.floor(ourSpriteCharacter.y / tileSize);
-  colOverlap = ourSpriteCharacter.x % tileSize;
-  rowOverlap = ourSpriteCharacter.y % tileSize;
+  baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  colOverlap = ourSpriteCharacter.x%tileSize;
+  rowOverlap = ourSpriteCharacter.y%tileSize;
 
   // Right collision detection
-  if (ourSpriteCharacter.speedX > 0) {
-    if ((levelMap[baseRow][baseCol + 1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow + 1][baseCol + 1] && !levelMap[baseRow + 1][baseCol] && rowOverlap)) {
+  if(ourSpriteCharacter.speedX>0){
+    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x = baseCol * tileSize;
     }
   }
 
   // Left collision detection
-
-  if (ourSpriteCharacter.speedX < 0) {
-    if ((!levelMap[baseRow][baseCol + 1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow + 1][baseCol + 1] && levelMap[baseRow + 1][baseCol] && rowOverlap)) {
-      ourSpriteCharacter.x = (baseCol + .99) * tileSize;
-
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x = (baseCol+1) * tileSize;
-
     }
   }
 }
