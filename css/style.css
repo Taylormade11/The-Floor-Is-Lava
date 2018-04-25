@@ -146,3 +146,14 @@ tr th {
    from {background-color: red;}
    to {background-color: yellow;}
 }
+
+tfoot:hover {
+ background-color: yellow;
+ color: black;
+}
+
+#scoretable{
+  padding: 450px;
+  
+  
+}
