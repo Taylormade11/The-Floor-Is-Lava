@@ -65,3 +65,7 @@ audio {
   height: 110px;
   overflow: scroll;
 }
+
+ul {
+  padding-top: 40px;
+}
