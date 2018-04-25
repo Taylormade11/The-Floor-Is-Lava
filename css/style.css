@@ -113,3 +113,51 @@ ul {
   
 }
 
+.aboutusflex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+div img {
+  width: 200px;
+  height: 200px;
+}
+
+div p {
+  width: 35%;
+}
+
+body * {
+  /* border: 1px solid red; */
+}
+
+table * {
+  /* border: 10px solid red; */
+  margin: 5px;
+  padding: 15px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2em;
+}
+table {
+  border: 10px solid red;
+}
+td {
+  border-top: 10px solid red;
+}
+
+td:hover {
+  background-color: yellow;
+  color: black;
+}
+
+@keyframes High-Score {
+  from {background-color: red;}
+  to {background-color: yellow;}
+}
+
+tr th {
+  animation: High-Score 1s infinite;
+}
