@@ -1,3 +1,45 @@
+
+#game-screen {
+  height: 750px;
+  width: 600px;
+}
+
+/* Header Line */
+#flex-box{
+border: 10px solid; color: transparent;
+
+}
+
+nav{
+float: right;
+
+}
+
+/* Instructions Text */
+#instructions{
+padding: 122px;
+width: 110px;
+float: right;
+background-color: blue;
+}
+
+
+/* Scroll for Instructions */
+.scroll{
+width: 110px;
+height: 110px;
+overflow: scroll;
+}
+
+
+/* Game Screen */
+canvas{
+  padding-left: 30%;
+  padding-right: 0;
+  background-color: black;
+  
+}
+
 body {
   background-color: #444;
   color: white;
@@ -65,3 +107,9 @@ audio {
   height: 110px;
   overflow: scroll;
 }
+
+ul {
+  padding-top: 40px;
+  
+}
+
