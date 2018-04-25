@@ -46,10 +46,7 @@ function renderLevel(){
   }
 }
 
-CreateFloor();
-
 var ourSpriteCharacter;
-var gameFloors;
 var paused = false; // Game starts in a paused state
 
 var thud = new Audio('audio/jump.wav');
@@ -59,7 +56,7 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
   ourSpriteCharacter = new Sprite(30, 30, canvas.width / 2, canvas.height / 2);
-  gameFloors = new CreateFloor(7150, 40, 0, 560);
+  var gameFloors = new CreateFloor(7150, 40, 0, 560);
   gameScreen.start();
   renderLevel();
 }
@@ -155,6 +152,7 @@ function togglePause() {
   }
 }
 
+// Declares the input keys and characteristics for sprite movement - called within updateGameArea
 function spriteMovement() {
   if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
