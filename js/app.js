@@ -57,11 +57,11 @@ var levelMap = [
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle='#000000';
+  var tileSrc = document.getElementById('tiles');
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===1){
-        context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -191,6 +191,7 @@ function togglePause() {
 
 function spriteMovement() {
   if (gameScreen.pressed && (gameScreen.pressed[37] || gameScreen.pressed[65])) {
+
     ourSpriteCharacter.speedX = -3;
     sideways.play();
   }
@@ -257,9 +258,10 @@ function updateGameArea() {
   // Left collision detection
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x = (baseCol+.99) * tileSize;
+      ourSpriteCharacter.x = (baseCol+1) * tileSize;
     }
   }
 }
 
 startGame();
+renderLevel();
