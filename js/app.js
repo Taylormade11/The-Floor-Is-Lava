@@ -1,6 +1,8 @@
 'use strict';
 
 var startScore = 2000000;
+var scoreArray = [];
+var score = 0;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -16,11 +18,13 @@ window.onload = function() {
         var score = startScore - (secs * 50000);
         var display = document.getElementById('time');
         display.textContent = secs + ' seconds ' + score;
-        console.log(score);
       }, 1000);
+      scoreArray.push(score);
     }
   });
 };
+
+console.log(score);
 
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
@@ -160,7 +164,9 @@ function lavaCollision() {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
+
     alert('sorry you hit the lava, you lose');
+
   }
 }
 
