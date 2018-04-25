@@ -89,7 +89,7 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
-  ourSpriteCharacter = new Sprite(30, 30, 60, 400);
+  ourSpriteCharacter = new Sprite(25, 25, 60, 400);
   gameFloors = new CreateFloor(7150, 40, 0, 540);
   gameScreen.start();
   renderLevel();
