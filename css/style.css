@@ -156,3 +156,36 @@ font-family: 'Bangers', cursive;
  flex-grow: 1;
  }
 
+ table * {
+ /* border: 10px solid red; */
+ margin: 5px;
+ padding: 15px;
+ font-family: 'Press Start 2P', cursive;
+ font-size: 1.5em;
+ width: 50px;
+ height: 50%;
+ 
+}
+table {
+ border: 5px solid red;
+}
+td {
+ border-top: 5px solid red;
+
+}
+
+#scoreTable{
+height: 80px;
+}
+
+
+
+td:hover {
+ background-color: yellow;
+ color: black;
+}
+
+body{
+  background: black;
+}
+
