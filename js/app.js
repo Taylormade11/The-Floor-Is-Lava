@@ -146,8 +146,6 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     alert('sorry you hit the lava, you lose');
-  } else {
-    console.log('no lavaCollision detected yet');
   }
 }
 
@@ -157,12 +155,6 @@ function cielCollision() {
     thud.play();
     console.log('oof!!!');
   }
-
-  // if(ourSpriteCharacter.speedY<0){
-  //   if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
-  //     ourSpriteCharacter.y = baseCol * tileSize;
-  //   }
-  // }
 }
 
 // Toggle between paused and un-paused game states with "p"
