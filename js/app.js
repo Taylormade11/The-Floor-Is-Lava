@@ -10,12 +10,45 @@ var tileSize = 30;
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
-var startTime = Date.now();
+// var startTime = Date.now();
 
-function timeStamp () {
-  var startTime =Date.now();
-}
+// function timeStamp () {
+//   var startTime =Date.now();
+// }
 
+// function startTimer(duration, display) {
+//   var timer = duration, minutes, seconds;
+//   setInterval(function () {
+//     minutes = parseInt(timer / 60, 0);
+//     seconds = parseInt(timer % 60, 0);
+//     minutes = minutes < 0 ? '00' + minutes : minutes;
+//     seconds = seconds < 0 ? '00' + seconds : seconds;
+//     display.textContent = minutes + ':' + seconds;
+//     if (--timer < 0) {
+//       timer = duration;
+//     }
+//   }, 1000);
+// }
+
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which ===83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var display = document.querySelector('#time');
+        display.textContent = secs + ' seconds';
+      }, 1000);
+    }
+  });
+};
+// window.addEventListener('keydown', function(e) {
+//   console.log('event', e);
+//   console.log(e.keyCode);
+//   if (e===83) {
+//     startTimer(twoMinutes, display);
+//   }
+// });
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
@@ -203,6 +236,8 @@ function updateGameArea() {
   // Looks for a collision with the floor each update loop (25ms);
   collision();
 }
+
+
 
 startGame();
 renderLevel();
