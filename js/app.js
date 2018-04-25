@@ -1,6 +1,6 @@
 'use strict';
 
-var startScore = 400000;
+var startScore = 4000000;
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
@@ -10,25 +10,6 @@ var tileSize = 30;
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
-// var startTime = Date.now();
-
-// function timeStamp () {
-//   var startTime =Date.now();
-// }
-
-// function startTimer(duration, display) {
-//   var timer = duration, minutes, seconds;
-//   setInterval(function () {
-//     minutes = parseInt(timer / 60, 0);
-//     seconds = parseInt(timer % 60, 0);
-//     minutes = minutes < 0 ? '00' + minutes : minutes;
-//     seconds = seconds < 0 ? '00' + seconds : seconds;
-//     display.textContent = minutes + ':' + seconds;
-//     if (--timer < 0) {
-//       timer = duration;
-//     }
-//   }, 1000);
-// }
 
 window.onload = function() {
   var secs = 0;
@@ -36,19 +17,17 @@ window.onload = function() {
     if (keyInput.which ===83) {
       setInterval(function(){
         secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
         var display = document.querySelector('#time');
-        display.textContent = secs + ' seconds';
+        display.textContent = secs + ' seconds ' + score;
+        // var score = startScore - (secs * 50000);
+        // var scoreDis = document.querySelector('#score');
+        // scoreDis.textConent = score + ' total score';
+        console.log(score);
       }, 1000);
     }
   });
 };
-// window.addEventListener('keydown', function(e) {
-//   console.log('event', e);
-//   console.log(e.keyCode);
-//   if (e===83) {
-//     startTimer(twoMinutes, display);
-//   }
-// });
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
