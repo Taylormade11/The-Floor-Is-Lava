@@ -1,5 +1,6 @@
 'use strict';
 
+var startScore = 400000;
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
@@ -9,6 +10,12 @@ var tileSize = 30;
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
+var startTime = Date.now();
+
+function timeStamp () {
+  var startTime =Date.now();
+}
+
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
@@ -183,6 +190,7 @@ function updateGameArea() {
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
+
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
 
   togglePause();
@@ -198,3 +206,6 @@ function updateGameArea() {
 
 startGame();
 renderLevel();
+
+
+
