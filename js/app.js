@@ -23,7 +23,7 @@ var levelMap = [
   [1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
@@ -33,6 +33,7 @@ var levelMap = [
   [1,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
+
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -154,7 +155,7 @@ function togglePause() {
   if (!paused && gameScreen.pressed[80]) {
     paused = true;
     console.log('paused');
-  } else if (paused && gameScreen.pressed[80]) {
+  } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     console.log('unpaused');
   }
@@ -170,15 +171,15 @@ function updateGameArea() {
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
   var colOverlap = ourSpriteCharacter.x%tileSize;
   var rowOverlap = ourSpriteCharacter.y%tileSize;
-  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
     sideways.play(); }
-  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
     sideways.play(); }
-  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
     sideways.play();}
-  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
     sideways.play();}
-  if (jumpDelay === 0 && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
     jump.play();
     jumpDelay += 1200;
@@ -199,14 +200,12 @@ function updateGameArea() {
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x=baseCol*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
     }
   }
 
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x=(baseCol+1)*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
     }
   }
 
@@ -217,9 +216,10 @@ function updateGameArea() {
   colOverlap = ourSpriteCharacter.x%tileSize;
   rowOverlap = ourSpriteCharacter.y%tileSize;
 
-  if(ourSpriteCharacter.speedY<=0 && !gameScreen.pressed[32]){
+
+  if(ourSpriteCharacter.speedY<0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y=(baseCol+1)*tileSize;
+      ourSpriteCharacter.y=(baseRow)*tileSize;
     }
   }
 }
