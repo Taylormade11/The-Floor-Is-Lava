@@ -63,7 +63,7 @@ var levelMap = [
   [1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
@@ -73,6 +73,7 @@ var levelMap = [
   [1,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
+
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -198,7 +199,7 @@ function togglePause() {
   if (!paused && gameScreen.pressed[80]) {
     paused = true;
     console.log('paused');
-  } else if (paused && gameScreen.pressed[80]) {
+  } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     console.log('unpaused');
   }
@@ -206,18 +207,23 @@ function togglePause() {
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 
+
 function updateGameArea() {
   renderLevel();
   gameScreen.clear();
-  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  var colOverlap = ourSpriteCharacter.x%tileSize;
+  var rowOverlap = ourSpriteCharacter.y%tileSize;
+  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
-  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
-  if (jumpDelay === 0 && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
     jump.play();
     jumpDelay += 1200;
@@ -235,12 +241,33 @@ function updateGameArea() {
 
   // Looks for a collision with the floor each update loop (25ms);
   collision();
+
+  if(ourSpriteCharacter.speedX>0){
+    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=baseCol*tileSize;
+    }
+  }
+
+  if(ourSpriteCharacter.speedX<0){
+    if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=(baseCol+1)*tileSize;
+    }
+  }
+
+  // checking for vertical collisions in downward but not upwards so we can jump through them.
+
+  baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  colOverlap = ourSpriteCharacter.x%tileSize;
+  rowOverlap = ourSpriteCharacter.y%tileSize;
+
+
+  if(ourSpriteCharacter.speedY<0){
+    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
+      ourSpriteCharacter.y=(baseRow)*tileSize;
+    }
+  }
 }
-
-
 
 startGame();
 renderLevel();
-
-
-
