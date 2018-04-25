@@ -29,7 +29,6 @@ var levelColumn = 25;
 var levelRow = 20;
 
 var jumpDelay = 0;
-var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
@@ -132,9 +131,6 @@ var gameScreen = {
     if (jumpDelay > 0) {
       jumpDelay -= 30;
     }
-    if (pauseDelay > 0) {
-      pauseDelay -= 30;
-    }
   }
 };
 
@@ -213,13 +209,11 @@ function wallCollision() {
 
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
-  if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
+  if (!paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
-    pauseDelay += 1200;
     console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+  } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
-    pauseDelay += 300;
     console.log('unpaused');
   }
 }
@@ -227,7 +221,6 @@ function togglePause() {
 // Defines all user input to interact with the sprite character
 function spriteMovement() {
   if (gameScreen.pressed && (gameScreen.pressed[37] || gameScreen.pressed[65])) {
-
     ourSpriteCharacter.speedX = -3;
     sideways.play();
   }
