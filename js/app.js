@@ -1,6 +1,6 @@
 'use strict';
 
-
+var startScore = 400000;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -11,6 +11,19 @@ var tileSize = 30;
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
+
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which ===83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var display = document.querySelector('#time');
+        display.textContent = secs + ' seconds';
+      }, 1000);
+    }
+  });
+};
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
@@ -36,7 +49,6 @@ var levelMap = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
-
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle='#000000';
@@ -53,13 +65,15 @@ CreateFloor();
 
 var ourSpriteCharacter;
 var gameFloors;
+var canvas = document.getElementById('game-screen');
 var paused = false; // Game starts in a paused state
-
-var thud = new Audio('audio/jump.wav');
+var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
+
+//var thud = new Audio('audio/thud.wav');
 
 function startGame() {
   ourSpriteCharacter = new Sprite(30, 30, canvas.width / 2, canvas.height / 2);
