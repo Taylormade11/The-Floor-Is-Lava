@@ -1,5 +1,22 @@
 'use strict';
 
+var startScore = 50000;
+
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which === 83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
+        var display = document.getElementById('time');
+        display.textContent = secs + ' seconds ' + score;
+        console.log(score);
+      }, 1000);
+    }
+  });
+};
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
@@ -49,7 +66,7 @@ function renderLevel(){
 var ourSpriteCharacter;
 var paused = false; // Game starts in a paused state
 
-var thud = new Audio('audio/jump.wav');
+var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
@@ -110,7 +127,7 @@ function Sprite(width, height, x, y) {
   this.speedX = 0;
   this.speedY = 0;
   this.gravity = 0.15;
-  this.gravitySpeed = .01;
+  this.gravitySpeed = 4;
   this.update = function() {
     var ctx = gameScreen.context;
     ctx.fillStyle = 'black';
@@ -129,8 +146,14 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     alert('sorry you hit the lava, you lose');
-  } else {
-    console.log('no lavaCollision detected yet');
+  }
+}
+
+function cielCollision() {
+  if (ourSpriteCharacter.y <= 0 + tileSize) {
+    ourSpriteCharacter.y = 0 + tileSize;
+    thud.play();
+    console.log('oof!!!');
   }
 }
 
@@ -170,8 +193,8 @@ function updateGameArea() {
   gameScreen.clear();
   var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  var colOverlap = ourSpriteCharacter.x%tileSize;
-  var rowOverlap = ourSpriteCharacter.y%tileSize;
+  var colOverlap = ourSpriteCharacter.x % tileSize;
+  var rowOverlap = ourSpriteCharacter.y % tileSize;
 
   spriteMovement();
 
@@ -186,27 +209,32 @@ function updateGameArea() {
   // Looks for a lavaCollision each update loop (25ms);
   lavaCollision();
 
+  // Checks if sprite has impacted the ceiling (top row of blocks)
+  cielCollision();
+
+  // Right collision detection
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=baseCol*tileSize;
+      ourSpriteCharacter.x = baseCol * tileSize;
     }
   }
 
+  // Left collision detection
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=(baseCol+1)*tileSize;
+      ourSpriteCharacter.x = (baseCol+.99) * tileSize;
     }
   }
 
   // checking for vertical collisions in downward but not upwards so we can jump through them.
   baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
   baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  colOverlap = ourSpriteCharacter.x%tileSize;
-  rowOverlap = ourSpriteCharacter.y%tileSize;
+  colOverlap = ourSpriteCharacter.x % tileSize;
+  rowOverlap = ourSpriteCharacter.y % tileSize;
 
   if(ourSpriteCharacter.speedY<0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y=(baseRow)*tileSize;
+      ourSpriteCharacter.y = (baseRow) * tileSize;
     }
   }
 }
