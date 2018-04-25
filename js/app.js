@@ -1,22 +1,23 @@
 'use strict';
 
 var startScore = 2000000;
-
+var arrayScore = [];
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
-window.onload = function() {
+window.onload = function () {
   var secs = 0;
-  document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
-      setInterval(function(){
+  document.addEventListener('keydown', function (keyInput) {
+    if (keyInput.which === 83) {
+      setInterval(function () {
         secs++; console.log(secs);
         var score = startScore - (secs * 50000);
         var display = document.getElementById('time');
         display.textContent = secs + ' seconds ' + score;
         console.log(score);
+        arrayScore[0] = score;
       }, 1000);
     }
   });
