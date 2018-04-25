@@ -1,3 +1,4 @@
+
 #game-screen {
   height: 750px;
   width: 600px;
@@ -38,3 +39,76 @@ canvas{
   background-color: black;
   
 }
+
+body {
+  background-color: #444;
+  color: white;
+}
+header {
+  background-color: black;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.5em;
+  margin: auto 0px;
+  text-align: center;
+}
+nav{
+  background-color: black;
+  float: right;
+  margin: 0px auto 30px auto;
+  padding-bottom: 30px;
+  width: 100%;
+}
+nav button {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  float: right;
+  font-size: 14px;
+  height: 40px;
+  margin-top: 30px;
+  width: 80px;
+}
+nav button:hover {
+  transform: scaleY(1.2) translateY(-3px);
+}
+main {
+  margin: 30px auto;
+  width: 960px;
+}
+/* Game Screen */
+canvas{
+  background-color: white;
+  float: left;
+}
+aside {
+  background-color: red;
+  float: right;
+  height: 600px;
+  width: 200px;
+}
+aside h2 {
+  font-size: 26px;
+  margin: 10px 0px;
+  text-align: center;
+}
+aside p {
+  font-size: 20px;
+  text-align: center;
+}
+audio {
+  margin-top: 296px;
+  width: 200px;
+}
+
+/* Scroll for Instructions */
+.scroll{
+  width: 110px;
+  height: 110px;
+  overflow: scroll;
+}
+
+ul {
+  padding-top: 40px;
+}
+
