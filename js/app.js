@@ -1,6 +1,8 @@
 'use strict';
 
+
 var startScore = 2000000;
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
