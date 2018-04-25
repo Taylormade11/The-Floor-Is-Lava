@@ -171,13 +171,13 @@ function updateGameArea() {
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
   var colOverlap = ourSpriteCharacter.x%tileSize;
   var rowOverlap = ourSpriteCharacter.y%tileSize;
-  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
-  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
