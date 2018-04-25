@@ -132,15 +132,15 @@ function Sprite(width, height, x, y) {
   };
 }
 
-// Looks for a collision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
-function collision() {
+// Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
+function lavaCollision() {
   if (ourSpriteCharacter.y > (canvas.height - (tileSize + ourSpriteCharacter.height))) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
     alert('sorry you hit the lava, you lose');
   } else {
-    console.log('no collision with floor detected yet');
+    console.log('no lavaCollision detected yet');
   }
 }
 
@@ -186,8 +186,8 @@ function updateGameArea() {
   }
   CreateFloor(7150, 40, 0, 560);
 
-  // Looks for a collision with the floor each update loop (25ms);
-  collision();
+  // Looks for a lavaCollision each update loop (25ms);
+  lavaCollision();
 
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
