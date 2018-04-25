@@ -110,5 +110,49 @@ audio {
 
 ul {
   padding-top: 40px;
+  
 }
+
+.aboutusflex{
+display: flex;
+align-items: center;
+align-content: space-around;
+justify-content: space-evenly;
+margin-left: 150px;
+
+}
+
+.aboutusflextwo{
+display: flex;
+align-items: center;
+align-content: space-around;
+justify-content: space-evenly;
+margin-left: 250px;
+margin-top: 50px;
+  
+}
+
+div img{
+  width: 200px;
+  height: 200px;
+  border-radius: 25%;
+}
+ div p{
+ width: 50%;
+ text-align: left;
+ border-radius: 11%;
+ 
+ }
+
+ h1{
+text-align: center;
+padding: 80px;
+text-align: 80px;
+font-family: 'Bangers', cursive;
+ }
+
+ div div{
+ flex-shrink: 1;
+ flex-grow: 1;
+ }
 
