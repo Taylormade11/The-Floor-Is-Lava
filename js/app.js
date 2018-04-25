@@ -81,7 +81,6 @@ var gameScreen = {
     this.context = this.canvas.getContext('2d');
     this.interval = setInterval(updateGameArea, 16);
     window.addEventListener('keydown', function (event) {
-      event.preventDefault();
       gameScreen.pressed = (gameScreen.pressed || []);
       gameScreen.pressed[event.keyCode] = (event.type === 'keydown');
     });
@@ -126,7 +125,7 @@ function Sprite(width, height, x, y) {
 
 // Looks for a collision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function collision() {
-  if (ourSpriteCharacter.y > 560) {
+  if (ourSpriteCharacter.y > (canvas.height - (tileSize + ourSpriteCharacter.height))) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     // thud.play();
@@ -169,13 +168,14 @@ function updateGameArea() {
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
-  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
+  if (gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
 
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
+
   CreateFloor(7150, 40, 0, 560);
 
   // Looks for a collision with the floor each update loop (25ms);
@@ -186,9 +186,7 @@ function updateGameArea() {
       ourSpriteCharacter.x=baseCol*tileSize;
       console.log(ourSpriteCharacter.x=baseCol*tileSize);
     }
-  }
-
-  if(ourSpriteCharacter.speedX<0){
+  } else if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x=(baseCol+1)*tileSize;
     }
