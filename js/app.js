@@ -128,7 +128,6 @@ var gameScreen = {
 
   // clears the entire canvas except for the floor area & a little bit above it, smears the block on diagonal descent, but preserves the block for now.
   clear : function() {
-    // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     if (jumpDelay > 0) {
       jumpDelay -= 30;
     }
