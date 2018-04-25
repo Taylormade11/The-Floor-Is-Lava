@@ -26,3 +26,14 @@ canvas{
   padding-right: 0;
   
 }
+
+.aboutusflex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div img {
+  width: 200px;
+  height: 200px;
+}
+
