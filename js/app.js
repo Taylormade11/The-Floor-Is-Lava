@@ -180,6 +180,7 @@ function updateGameArea() {
     sideways.play();}
   if (jumpDelay === 0 && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
+   
     jump.play();
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
@@ -227,3 +228,5 @@ function updateGameArea() {
 
 startGame();
 renderLevel();
+
+
