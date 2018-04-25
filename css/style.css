@@ -181,13 +181,13 @@ margin-left: 420px;
 
 
 
-td:hover {
+tfoot:hover {
  background-color: yellow;
  color: black;
 }
 
 body{
-  background: black;
+  background:555;
 }
 
 @keyframes High-Score {
@@ -198,4 +198,11 @@ body{
 tr th {
  animation: High-Score 1s infinite;
 }
+
+@keyframes tfoot-thead {
+ from {background-color: red;}
+ to {background-color: yellow;}
+}
+
+
 
