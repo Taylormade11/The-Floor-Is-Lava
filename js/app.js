@@ -184,7 +184,7 @@ function togglePause() {
 }
 
 function spriteMovement() {
-  if (gameScreen.pressed && gameScreen.pressed[37] || gameScreen.pressed[65]) {
+  if (gameScreen.pressed && (gameScreen.pressed[37] || gameScreen.pressed[65])) {
     ourSpriteCharacter.speedX = -3;
     sideways.play();
   }
