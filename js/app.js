@@ -1,9 +1,28 @@
 'use strict';
 
+
+var startScore = 2000000;
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
 var context = canvas.getContext('2d');
+
+window.onload = function() {
+  var secs = 0;
+  document.addEventListener('keydown', function(keyInput) {
+    if (keyInput.which ===83) {
+      setInterval(function(){
+        secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
+        var display = document.getElementById('time');
+        display.textContent = secs + ' seconds ' + score;
+        console.log(score);
+      }, 1000);
+    }
+  });
+};
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -23,7 +42,7 @@ var levelMap = [
   [1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
@@ -33,6 +52,7 @@ var levelMap = [
   [1,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
+
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -52,7 +72,7 @@ var ourSpriteCharacter;
 var gameFloors;
 var paused = false; // Game starts in a paused state
 
-var thud = new Audio('audio/jump.wav');
+var beep = new Audio('audio/jump.wav');
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
@@ -142,7 +162,7 @@ function collision() {
   if (ourSpriteCharacter.y > 560) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
-    thud.play();
+    beep.play();
     alert('sorry you hit the lava, you lose');
   } else {
     console.log('no collision with floor detected yet');
@@ -151,10 +171,10 @@ function collision() {
 
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
-  if (!paused && gameScreen.pressed[80]) {
+  if (!paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     console.log('paused');
-  } else if (paused && gameScreen.pressed[80]) {
+  } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     console.log('unpaused');
   }
@@ -166,27 +186,21 @@ function togglePause() {
 function updateGameArea() {
   renderLevel();
   gameScreen.clear();
-  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
-  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  var colOverlap = ourSpriteCharacter.x%tileSize;
-  var rowOverlap = ourSpriteCharacter.y%tileSize;
-  if (gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3.5;
+  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
-  if (gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
-  if (gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3.5;
+  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
-  if (jumpDelay === 0 && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
    
     jump.play();
     jumpDelay += 1200;
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
-  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
-
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
@@ -196,18 +210,20 @@ function updateGameArea() {
 
   // Looks for a collision with the floor each update loop (25ms);
   collision();
+  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  var colOverlap = ourSpriteCharacter.x%tileSize;
+  var rowOverlap = ourSpriteCharacter.y%tileSize;
 
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x=baseCol*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
     }
   }
 
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x=(baseCol+1)*tileSize;
-      // ourSpriteCharacter.speedY += ourSpriteCharacter.gravitySpeed;
     }
   }
 
@@ -218,15 +234,12 @@ function updateGameArea() {
   colOverlap = ourSpriteCharacter.x%tileSize;
   rowOverlap = ourSpriteCharacter.y%tileSize;
 
-  if(ourSpriteCharacter.speedY<=0 && !gameScreen.pressed[32]){
+
+  if(ourSpriteCharacter.speedY<0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y=(baseCol+1)*tileSize;
+      ourSpriteCharacter.y=(baseRow)*tileSize;
     }
   }
 }
 
-
 startGame();
-renderLevel();
-
-
