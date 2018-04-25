@@ -1,7 +1,6 @@
 'use strict';
 
-var startScore = 400000;
-
+var startScore = 4000000;
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
@@ -18,8 +17,13 @@ window.onload = function() {
     if (keyInput.which ===83) {
       setInterval(function(){
         secs++; console.log(secs);
+        var score = startScore - (secs * 50000);
         var display = document.querySelector('#time');
-        display.textContent = secs + ' seconds';
+        display.textContent = secs + ' seconds ' + score;
+        // var score = startScore - (secs * 50000);
+        // var scoreDis = document.querySelector('#score');
+        // scoreDis.textConent = score + ' total score';
+        console.log(score);
       }, 1000);
     }
   });
