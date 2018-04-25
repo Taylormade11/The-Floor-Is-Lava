@@ -113,6 +113,8 @@ var gameScreen = {
     this.context = this.canvas.getContext('2d');
     this.interval = setInterval(updateGameArea, 16);
     window.addEventListener('keydown', function (event) {
+      event.preventDefault();
+
       gameScreen.pressed = (gameScreen.pressed || []);
       gameScreen.pressed[event.keyCode] = (event.type === 'keydown');
     });
@@ -153,8 +155,8 @@ function Sprite(width, height, x, y) {
   };
 }
 
-// Looks for a collision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
-function collision() {
+// Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
+function lavaCollision() {
   if (ourSpriteCharacter.y > 540) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
@@ -220,8 +222,8 @@ function updateGameArea() {
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
 
-  // Looks for a collision with the floor each update loop (25ms);
-  collision();
+  // Looks for a lavaCollision with the floor each update loop (25ms);
+  lavaCollision();
 
   var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
