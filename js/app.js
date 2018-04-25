@@ -81,7 +81,7 @@ var ourSpriteCharacter;
 var gameFloors;
 var paused = false; // Game starts in a paused state
 
-var beep = new Audio('audio/jump.wav');
+var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
 var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
@@ -155,12 +155,6 @@ function Sprite(width, height, x, y) {
   this.updatedPosition = function() {
     this.x += this.speedX;
     this.y += this.speedY + this.gravity;
-    // Trying to control/set a limit on how fast sprite can travel in y axis up and down. But once it reaches that speed it stays that speed and won't change direction. Need to go about differently, possibly globally
-    // if (this.speedY >= 7) {
-    //   this.speedY = 7;
-    // } else if (this.speedY <= -50) {
-    //   this.speedY = -50;
-    // }
   };
 }
 
@@ -170,10 +164,16 @@ function collision() {
   if (ourSpriteCharacter.y > 540) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
-    beep.play();
+    thud.play();
     alert('sorry you hit the lava, you lose');
-  } else {
-    console.log('no collision with floor detected yet');
+  }
+}
+
+function cielCollision() {
+  if (ourSpriteCharacter.y <= 0 + tileSize) {
+    ourSpriteCharacter.y = 0 + tileSize;
+    thud.play();
+    console.log('oof!!!');
   }
 }
 
@@ -221,8 +221,8 @@ function updateGameArea() {
 
   var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
   var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  var colOverlap = ourSpriteCharacter.x%tileSize;
-  var rowOverlap = ourSpriteCharacter.y%tileSize;
+  var colOverlap = ourSpriteCharacter.x % tileSize;
+  var rowOverlap = ourSpriteCharacter.y % tileSize;
 
   // checking for vertical collisions downward but not upwards so we can jump through them.
 
@@ -237,15 +237,20 @@ function updateGameArea() {
   colOverlap = ourSpriteCharacter.x%tileSize;
   rowOverlap = ourSpriteCharacter.y%tileSize;
 
+  // Checks if sprite has impacted the ceiling (top row of blocks)
+  cielCollision();
+
+  // Right collision detection
   if(ourSpriteCharacter.speedX>0){
     if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=baseCol*tileSize;
+      ourSpriteCharacter.x = baseCol * tileSize;
     }
   }
 
+  // Left collision detection
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=(baseCol+1)*tileSize;
+      ourSpriteCharacter.x = (baseCol+.99) * tileSize;
     }
   }
 }
