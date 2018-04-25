@@ -1,14 +1,9 @@
 'use strict';
 
-var startScore = 2000000;
-//select the id for canvas to draw to
-var canvas = document.getElementById('game-screen');
-//sest the context of the canvas to 2d
-var context = canvas.getContext('2d');
 window.onload = function() {
   var secs = 0;
   document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
+    if (keyInput.which === 83) {
       setInterval(function(){
         secs++; console.log(secs);
         var score = startScore - (secs * 50000);
@@ -19,7 +14,6 @@ window.onload = function() {
     }
   });
 };
-
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -123,7 +117,6 @@ var gameScreen = {
 };
 
 // Creates sprite with inputs we feed it, and gives it an update method and updatedPos method. Also applies speeds and gravity effects.
-
 function Sprite(width, height, x, y) {
   this.width = width;
   this.height = height;
@@ -131,7 +124,8 @@ function Sprite(width, height, x, y) {
   this.y = y;
   this.speedX = 0;
   this.speedY = 0;
-  this.gravity = 4;
+  this.gravity = 0.15;
+  this.gravitySpeed = .01;
   this.update = function() {
     var ctx = gameScreen.context;
     ctx.fillStyle = 'black';
@@ -139,7 +133,8 @@ function Sprite(width, height, x, y) {
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
-    this.y += this.speedY + this.gravity;
+    this.gravitySpeed += this.gravity;
+    this.y += this.speedY + this.gravitySpeed;
   };
 }
 
@@ -176,13 +171,12 @@ function spriteMovement() {
     sideways.play();
   }
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
-    jump.play();
+    ourSpriteCharacter.speedY += -10;
     jumpDelay += 1200;
+    jump.play();
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
-  } if (jumpDelay > 400 && jumpDelay <= 1200) {
-    ourSpriteCharacter.speedY = -7;
-  } else {
-    ourSpriteCharacter.speedY = 0;}
+  }
+  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
 }
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
