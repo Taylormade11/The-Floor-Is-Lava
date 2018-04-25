@@ -155,14 +155,7 @@ function togglePause() {
   }
 }
 
-// updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
-function updateGameArea() {
-  renderLevel();
-  gameScreen.clear();
-  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
-  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
-  var colOverlap = ourSpriteCharacter.x%tileSize;
-  var rowOverlap = ourSpriteCharacter.y%tileSize;
+function spriteMovement() {
   if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
     sideways.play(); }
   if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3;
@@ -178,6 +171,18 @@ function updateGameArea() {
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
+}
+
+// updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
+function updateGameArea() {
+  renderLevel();
+  gameScreen.clear();
+  var baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  var baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  var colOverlap = ourSpriteCharacter.x%tileSize;
+  var rowOverlap = ourSpriteCharacter.y%tileSize;
+
+  spriteMovement();
 
   togglePause();
   if (paused === false) {
