@@ -1,5 +1,7 @@
 'use strict';
 
+var startScore = 50000;
+
 window.onload = function() {
   var secs = 0;
   document.addEventListener('keydown', function(keyInput) {
@@ -149,6 +151,20 @@ function lavaCollision() {
   }
 }
 
+function cielCollision() {
+  if (ourSpriteCharacter.y <= 0 + tileSize) {
+    ourSpriteCharacter.y = 0 + tileSize;
+    thud.play();
+    console.log('oof!!!');
+  }
+
+  // if(ourSpriteCharacter.speedY<0){
+  //   if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
+  //     ourSpriteCharacter.y = baseCol * tileSize;
+  //   }
+  // }
+}
+
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
   if (!paused && gameScreen.pressed[80]) {
@@ -200,6 +216,9 @@ function updateGameArea() {
 
   // Looks for a lavaCollision each update loop (25ms);
   lavaCollision();
+
+  // Checks if sprite has impacted the ceiling (top row of blocks)
+  cielCollision();
 
   // Right collision detection
   if(ourSpriteCharacter.speedX>0){
