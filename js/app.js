@@ -55,7 +55,7 @@ var levelMap = [
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
   var tileSrc = document.getElementById('tiles');
- // context.fillStyle='#000000';
+ // context.fillStyle='#000000'; filling with image instead
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===1){
