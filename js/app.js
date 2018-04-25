@@ -6,22 +6,6 @@ var startScore = 2000000;
 var canvas = document.getElementById('game-screen');
 //sest the context of the canvas to 2d
 var context = canvas.getContext('2d');
-
-window.onload = function() {
-  var secs = 0;
-  document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
-      setInterval(function(){
-        secs++; console.log(secs);
-        var score = startScore - (secs * 50000);
-        var display = document.getElementById('time');
-        display.textContent = secs + ' seconds ' + score;
-        console.log(score);
-      }, 1000);
-    }
-  });
-};
-
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -88,8 +72,8 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 
 function startGame() {
-  ourSpriteCharacter = new Sprite(30, 30, 60, 400);
-  gameFloors = new CreateFloor(7150, 40, 0, 540);
+  ourSpriteCharacter = new Sprite(30, 30, canvas.width / 2, canvas.height / 2);
+  var gameFloors = new CreateFloor(7150, 40, 0, 560);
   gameScreen.start();
   renderLevel();
   renderblue();
@@ -146,7 +130,8 @@ function Sprite(width, height, x, y) {
   this.y = y;
   this.speedX = 0;
   this.speedY = 0;
-  this.gravity = 4;
+  this.gravity = 0.15;
+  this.gravitySpeed = .01;
   this.update = function() {
     var ctx = gameScreen.context;
     ctx.fillStyle = 'black';
@@ -179,7 +164,7 @@ function cielCollision() {
 
 // Toggle between paused and un-paused game states with "p"
 function togglePause() {
-  if (!paused && gameScreen.pressed && gameScreen.pressed[80]) {
+  if (!paused && gameScreen.pressed[80]) {
     paused = true;
     console.log('paused');
   } else if (paused && gameScreen.pressed && gameScreen.pressed[80]) {
@@ -203,7 +188,7 @@ function updateGameArea() {
   if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3;
     sideways.play();}
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
-    jump.play();
+    ourSpriteCharacter.speedY += -10;
     jumpDelay += 1200;
   } if (jumpDelay > 400 && jumpDelay <= 1200) {
     ourSpriteCharacter.speedY = -7;
@@ -214,7 +199,8 @@ function updateGameArea() {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
-  CreateFloor(7150, 40, 0, 560);
+  if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
+}
 
   // Looks for a collision with the floor each update loop (25ms);
   collision();
@@ -224,12 +210,10 @@ function updateGameArea() {
   var colOverlap = ourSpriteCharacter.x % tileSize;
   var rowOverlap = ourSpriteCharacter.y % tileSize;
 
-  // checking for vertical collisions downward but not upwards so we can jump through them.
-
-  if(ourSpriteCharacter.speedY<=0){
-    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y=(baseRow)*tileSize;
-    }
+  togglePause();
+  if (paused === false) {
+    ourSpriteCharacter.updatedPosition();
+    ourSpriteCharacter.update();
   }
 
   baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
@@ -251,6 +235,18 @@ function updateGameArea() {
   if(ourSpriteCharacter.speedX<0){
     if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
       ourSpriteCharacter.x = (baseCol+.99) * tileSize;
+    }
+  }
+
+  // checking for vertical collisions in downward but not upwards so we can jump through them.
+  baseCol = Math.floor(ourSpriteCharacter.x/tileSize);
+  baseRow = Math.floor(ourSpriteCharacter.y/tileSize);
+  colOverlap = ourSpriteCharacter.x%tileSize;
+  rowOverlap = ourSpriteCharacter.y%tileSize;
+
+  if(ourSpriteCharacter.speedY<0){
+    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
+      ourSpriteCharacter.y=(baseRow)*tileSize;
     }
   }
 }
