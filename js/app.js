@@ -214,15 +214,9 @@ function updateGameArea() {
   var colOverlap = ourSpriteCharacter.x%tileSize;
   var rowOverlap = ourSpriteCharacter.y%tileSize;
 
-  if(ourSpriteCharacter.speedX>0){
-    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=baseCol*tileSize;
-    }
-  }
-
-  if(ourSpriteCharacter.speedX<0){
-    if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
-      ourSpriteCharacter.x=(baseCol+1)*tileSize;
+  if(ourSpriteCharacter.speedY<=0){
+    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
+      ourSpriteCharacter.y=(baseRow)*tileSize;
     }
   }
 
@@ -233,10 +227,15 @@ function updateGameArea() {
   colOverlap = ourSpriteCharacter.x%tileSize;
   rowOverlap = ourSpriteCharacter.y%tileSize;
 
+  if(ourSpriteCharacter.speedX>0){
+    if((levelMap[baseRow][baseCol+1] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=baseCol*tileSize;
+    }
+  }
 
-  if(ourSpriteCharacter.speedY<0){
-    if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
-      ourSpriteCharacter.y=(baseRow)*tileSize;
+  if(ourSpriteCharacter.speedX<0){
+    if((!levelMap[baseRow][baseCol+1] && levelMap[baseRow][baseCol]) || (!levelMap[baseRow+1][baseCol+1] && levelMap[baseRow+1][baseCol] && rowOverlap)){
+      ourSpriteCharacter.x=(baseCol+1)*tileSize;
     }
   }
 }
