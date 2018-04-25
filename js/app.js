@@ -187,7 +187,8 @@ function updateGameArea() {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
-  CreateFloor(7150, 40, 0, 560);
+
+  new CreateFloor(7150, 40, 0, 560);
 
   // Looks for a lavaCollision each update loop (25ms);
   lavaCollision();
