@@ -189,3 +189,12 @@ body{
   background: black;
 }
 
+@keyframes High-Score {
+ from {background-color: red;}
+ to {background-color: yellow;}
+}
+
+tr th {
+ animation: High-Score 1s infinite;
+}
+
