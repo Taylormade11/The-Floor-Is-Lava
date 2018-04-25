@@ -132,7 +132,6 @@ function Sprite(width, height, x, y) {
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y > (canvas.height - (tileSize + ourSpriteCharacter.height))) {
-    console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
     alert('sorry you hit the lava, you lose');
@@ -154,18 +153,18 @@ function togglePause() {
 
 // Declares the input keys and characteristics for sprite movement - called within updateGameArea
 function spriteMovement() {
-  if (gameScreen.pressed && gameScreen.pressed[37]) {ourSpriteCharacter.speedX = -3;
-    sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[65]) {ourSpriteCharacter.speedX = -3;
-    sideways.play(); }
-  if (gameScreen.pressed && gameScreen.pressed[39]) {ourSpriteCharacter.speedX = 3;
-    sideways.play();}
-  if (gameScreen.pressed && gameScreen.pressed[68]) {ourSpriteCharacter.speedX = 3;
-    sideways.play();}
+  if (gameScreen.pressed && (gameScreen.pressed[37] || gameScreen.pressed[65])) {
+    ourSpriteCharacter.speedX = -3;
+    sideways.play();
+  }
+  if (gameScreen.pressed && (gameScreen.pressed[39] || gameScreen.pressed[68])) {
+    ourSpriteCharacter.speedX = 3;
+    sideways.play();
+  }
   if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
     ourSpriteCharacter.speedY += -10;
-    jump.play();
     jumpDelay += 1200;
+    jump.play();
     console.log('jump recorded, now wait a little bit before you can jump again so you don\'t cheat and fly through the level!');
   }
   if (gameScreen.pressed && gameScreen.pressed[40]) {ourSpriteCharacter.speedY += .5; }
