@@ -3,6 +3,9 @@ var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
 
+var spriteGuyimage = new Image();
+spriteGuyimage.src = 'assets/spacePirate.png';
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
@@ -126,8 +129,6 @@ function renderLava(){
   }
 }
 
-// renderLava();
-
 var ourSpriteCharacter;
 var gameFloors;
 var paused = false; // Game starts in a paused state
@@ -139,20 +140,11 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
   ourSpriteCharacter = new Sprite(27, 27, 60, 400);
-  // gameFloors = new CreateFloor(7150, 40, 0, 540);
   gameScreen.start();
   renderLava();
   renderLevel();
   renderblue();
 }
-
-// // Creates floor with parameters fed, may be able to feed it multiple blocks and compare all floors for object detection at one time.
-// function CreateFloor(width, height, x, y) {
-//   var canvas = document.getElementById('game-screen');
-//   var ctx = canvas.getContext('2d');
-//   ctx.fillStyle = 'red';
-//   ctx.fillRect(x, y, width, height);
-// }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
 var gameScreen = {
@@ -199,8 +191,7 @@ function Sprite(width, height, x, y) {
   this.gravity = 4;
   this.update = function() {
     var ctx = gameScreen.context;
-    ctx.fillStyle = 'white';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
@@ -312,6 +303,14 @@ function spriteMovement() {
   }
 }
 
+function spriteFriction() {
+  if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
+    ourSpriteCharacter.speedX -= .5;
+  } else if (spriteGrounded === true && ourSpriteCharacter.speedX < 0) {
+    ourSpriteCharacter.speedX += .5;
+  }
+}
+
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
@@ -321,6 +320,8 @@ function updateGameArea() {
   renderblue();
   renderLava();
   gameScreen.clear();
+
+  spriteFriction();
   spriteMovement();
 
   togglePause();
