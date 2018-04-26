@@ -126,11 +126,9 @@ function renderLava(){
   }
 }
 
-// renderLava();
-
 var ourSpriteCharacter;
 var gameFloors;
-var paused = false; // Game starts in a paused state
+var paused = false;
 
 var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
@@ -139,20 +137,11 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
   ourSpriteCharacter = new Sprite(27, 27, 60, 400);
-  // gameFloors = new CreateFloor(7150, 40, 0, 540);
   gameScreen.start();
   renderLava();
   renderLevel();
   renderblue();
 }
-
-// // Creates floor with parameters fed, may be able to feed it multiple blocks and compare all floors for object detection at one time.
-// function CreateFloor(width, height, x, y) {
-//   var canvas = document.getElementById('game-screen');
-//   var ctx = canvas.getContext('2d');
-//   ctx.fillStyle = 'red';
-//   ctx.fillRect(x, y, width, height);
-// }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
 var gameScreen = {
@@ -310,8 +299,12 @@ function spriteMovement() {
   } else {
     ourSpriteCharacter.speedY = 0;
   }
+  if (gameScreen.pressed && (gameScreen.pressed[38] || gameScreen.pressed[87])) {
+    ourSpriteCharacter.speedY = -1.8;
+  }
 }
 
+// Defines the friction to be applied when the sprite is moved across the x-axis
 function spriteFriction() {
   if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
     ourSpriteCharacter.speedX -= .5;
@@ -348,10 +341,8 @@ function updateGameArea() {
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
 
+  // Checks if sprite has impacted the goal
   goalCollision();
 }
 
 startGame();
-renderLevel();
-renderblue();
-renderLava();
