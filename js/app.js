@@ -7,20 +7,18 @@ var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
-window.onload = function() {
+function calcScore(trigger) {
   var secs = 0;
-  document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
-      setInterval(function(){
-        secs++; console.log(secs);
-        var score = startScore - (secs * 50000);
-        var display = document.getElementById('time');
-        display.textContent = secs + ' seconds ' + score;
-        console.log(score);
-      }, 1000);
-    }
-  });
-};
+  if (trigger === 1) {
+    setInterval(function(){
+      secs++; console.log(secs);
+      var score = startScore - (secs * 50000);
+      var display = document.getElementById('time');
+      display.textContent = secs + ' seconds ' + score;
+      console.log(score);
+    }, 1000);
+  }
+}
 
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
@@ -122,9 +120,11 @@ var gameScreen = {
     window.addEventListener('keyup', function (event) {
       gameScreen.pressed[event.keyCode] = (event.type === 'keydown');
     });
+    calcScore(1);
   },
   stop : function() {
     clearInterval(this.interval);
+    calcScore(0);
   },
 
   // clears the entire canvas except for the floor area & a little bit above it, smears the block on diagonal descent, but preserves the block for now.
