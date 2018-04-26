@@ -35,7 +35,10 @@ nav{
 #gameScreen {
   padding-top: 50px;
   margin-top: 30px;
-  background-color: white;
+}
+
+canvas {
+  background-image: url('../assets/Rough_Volcano.jpg');
 }
 
 nav ul {
