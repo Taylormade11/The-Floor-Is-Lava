@@ -69,3 +69,80 @@ audio {
 ul {
   padding-top: 40px;
 }
+
+.aboutusflex{
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  justify-content: space-evenly;
+  margin-left: 150px;
+  }
+  
+  .aboutusflextwo{
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  justify-content: space-evenly;
+  margin-left: 250px;
+  margin-top: 50px;
+  }
+
+h1 {
+  text-align: center;
+  padding: 80px;
+  text-align: 80px;
+  font-family: 'Bangers', cursive;
+}
+
+
+#instructions{
+  padding: 122px;
+  width: 110px;
+  float: right;
+}
+
+.scroll{
+  width: 110px;
+  height: 110px;
+  overflow: scroll;
+}
+  table * {
+     margin: 5px;
+    padding: 15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5em;
+    width: 50px;
+    height: 50%;
+  }
+table {
+  border: 5px solid red;
+  }
+td {
+  border-top: 5px solid red;
+}
+
+div img{
+  width: 200px;
+  height: 200px;
+  border-radius: 25%;
+}
+
+div p{
+  width: 50%;
+  text-align: left;
+  border-radius: 11%;
+}
+
+@keyframes High-Score {
+  from {background-color: red;}
+  to {background-color: yellow;}
+}
+  
+tr th {
+   animation: High-Score 1s infinite;
+  }
+  
+  @keyframes tfoot-thead {
+   from {background-color: red;}
+   to {background-color: yellow;}
+}
