@@ -8,24 +8,15 @@ var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
-window.onload = function() {
-  var secs = 0;
-  document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
-      setInterval(function(){
-        secs++; console.log(secs);
-        var score = startScore - (secs * 50000);
-        var display = document.getElementById('time');
-        display.textContent = secs + ' seconds ' + score;
-        console.log(score);
-      }, 1000);
-      if (score === 0) {
-        alert('You ran out of time');
-        clearInterval();
-      }
-    }
-  });
-};
+// Calculates player's score - decrements over time
+var secs = 0;
+var scoreInterval = setInterval(function(){
+  secs++; console.log(secs);
+  var score = startScore - (secs * 50000);
+  var display = document.getElementById('time');
+  display.textContent = secs + ' seconds ' + score;
+  console.log(score);
+}, 1000);
 
 console.log(score);
 // size of the tiles (platforms) to be drawn
@@ -131,6 +122,7 @@ var gameScreen = {
   },
   stop : function() {
     clearInterval(this.interval);
+    clearInterval(scoreInterval);
   },
 
   // clears the entire canvas except for the floor area & a little bit above it, smears the block on diagonal descent, but preserves the block for now.
@@ -162,6 +154,14 @@ function Sprite(width, height, x, y) {
     this.x += this.speedX;
     this.y += this.speedY + this.gravity;
   };
+}
+
+// Looks for a collision with the goal - to stop the clock and beat the game
+function goalCollision() {
+  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+    gameScreen.stop();
+    alert('You win!!!');
+  }
 }
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
@@ -279,6 +279,8 @@ function updateGameArea() {
 
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
+
+  goalCollision();
 }
 
 startGame();
