@@ -1,6 +1,7 @@
 'use strict';
 var userInitials = '';
 var startScore = 2000000;
+var spriteGrounded = false;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -28,7 +29,7 @@ var pauseDelay = 0;
 // tile map for level 1 is black block rest are white
 var levelMap = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,5,2],
   [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,2,2,2],
   [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
@@ -43,14 +44,14 @@ var levelMap = [
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
+  [1,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,4,4,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
 ];
 
 var tileSrc = new Image();
-tileSrc.src = 'assets/brick.png';
+tileSrc.src = 'assets/darkstone.png';
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -62,6 +63,46 @@ function renderLevel(){
     }
   }
 }
+
+var platSrc = new Image();
+platSrc.src = 'assets/grassdirt.png';
+
+function renderPlats(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===4){
+        context.drawImage(platSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+function renderSign(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===6){
+        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+function renderGoal(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===5){
+        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
 
 function renderblue(){
   context.fillStyle='#00FFFF';
@@ -170,7 +211,7 @@ function Sprite(width, height, x, y) {
 // Looks for a collision with the goal - to stop the clock and beat the game
 function goalCollision() {
   score;
-  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+  if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
     score = score+500000;
     localStorage.setItem('local-score', score);
@@ -182,7 +223,7 @@ function goalCollision() {
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
-  if (ourSpriteCharacter.y > 540) {
+  if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
@@ -213,6 +254,7 @@ function wallCollision() {
   if(ourSpriteCharacter.speedY<=0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
       ourSpriteCharacter.y=(baseRow)*tileSize;
+      spriteGrounded = true;
     }
   }
 
@@ -259,9 +301,10 @@ function spriteMovement() {
     ourSpriteCharacter.speedX = 3;
     sideways.play();
   }
-  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && spriteGrounded === true && gameScreen.pressed && gameScreen.pressed[32]) {
     jump.play();
     jumpDelay += 1200;
+    spriteGrounded = false;
   } if (jumpDelay > 400 && jumpDelay <= 1200) {
     ourSpriteCharacter.speedY = -7;
   } else {
@@ -272,6 +315,9 @@ function spriteMovement() {
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
+  renderPlats();
+  renderGoal();
+  renderSign();
   renderblue();
   renderLava();
   gameScreen.clear();
@@ -282,8 +328,6 @@ function updateGameArea() {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
-
-  // CreateFloor(7150, 40, 0, 560);
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();

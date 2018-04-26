@@ -70,7 +70,7 @@ nav button:hover {
 
 #container {
   padding-top: 150px;
-  width: 80%;
+  width: 90%;
   margin: auto;
   padding-bottom: 100px;
 }
@@ -80,16 +80,17 @@ aside {
   float: right;
   height: 500px;
   width: 40%;
+  padding-right: 1%;
 }
 
 aside h2 {
-  font-size: 26px;
+  font-size: 32px;
   margin: 10px 0px;
   text-align: center;
 }
 
 aside p {
-  font-size: 20px;
+  font-size: 19px;
   text-align: center;
 }
 
@@ -211,6 +212,50 @@ footer {
   width: 80%;
   text-align: center;
   margin: auto;
+}
+
+@media (max-width: 1500px) {
+  aside {
+    margin-top: 30px;
+    float: right;
+    height: 500px;
+    width: 35%;
+    margin-left: 1%;
+    padding-right: 0%;
+  }
+  
+  aside h2 {
+    font-size: 26px;
+    margin: 10px 0px;
+    text-align: center;
+  }
+  
+  aside p {
+    font-size: 17px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1320px) {
+  aside {
+    margin-top: 30px;
+    float: right;
+    height: 500px;
+    width: 30%;
+    margin-left: 1%;
+    padding-right: 0%;
+  }
+  
+  aside h2 {
+    font-size: 26px;
+    margin: 10px 0px;
+    text-align: center;
+  }
+  
+  aside p {
+    font-size: 12px;
+    text-align: center;
+  }
 }
 
 @keyframes High-Score {
