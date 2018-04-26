@@ -158,6 +158,14 @@ function Sprite(width, height, x, y) {
   };
 }
 
+// Looks for a collision with the goal - to stop the clock and beat the game
+function goalCollision() {
+  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+    gameScreen.stop();
+    alert('You win!!!');
+  }
+}
+
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y > 540) {
@@ -268,6 +276,8 @@ function updateGameArea() {
 
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
+
+  goalCollision();
 }
 
 startGame();
