@@ -129,8 +129,6 @@ function renderLava(){
   }
 }
 
-// renderLava();
-
 var ourSpriteCharacter;
 var gameFloors;
 var paused = false; // Game starts in a paused state
