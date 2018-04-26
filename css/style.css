@@ -1,71 +1,382 @@
+* {
+  font-family: 'Press Start 2P', cursive;
+  background: url('../assets/space.gif')
+}
+
 body {
-  background-color: #444;
   color: white;
 }
+
 header {
   background-color: black;
-  font-family: 'Amatic SC', cursive;
-  font-size: 1.5em;
+  width: 100%;
+  font-size: 2rem;
   font-weight: bold;
-  line-height: 1.5em;
-  margin: auto 0px;
   text-align: center;
+  height: 200px;
+  padding-bottom: 20px;
+  text-shadow: 4px 4px 8px rgb(105, 96, 96);
 }
+
+h1 {
+  display: block;
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 0px;
+}
+
 nav{
   background-color: black;
-  float: right;
-  margin: 0px auto 30px auto;
-  padding-bottom: 30px;
-  width: 100%;
+  margin-bottom: 30px;
+  display: block;
+  /* float: right; */
 }
+
+#gameScreen {
+  padding-top: 50px;
+  margin-top: 30px;
+  background-color: white;
+}
+
+nav ul {
+  display: block;
+  width: 100%;
+  padding: 0px;
+  margin-top: 20px;
+  padding-top: 20px;
+  margin-bottom: 70px;
+}
+
+nav li {
+  display: inline-block;
+}
+
+.tiles {
+  display: none;
+}
+
 nav button {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   float: right;
   font-size: 14px;
   height: 40px;
-  margin-top: 30px;
-  width: 80px;
+  text-shadow: 2px 2px 2px rgb(105, 96, 96);
 }
+
 nav button:hover {
   transform: scaleY(1.2) translateY(-3px);
 }
-main {
-  margin: 30px auto;
-  width: 960px;
+
+#container {
+  padding-top: 150px;
+  width: 80%;
+  margin: auto;
+  padding-bottom: 100px;
 }
-/* Game Screen */
-canvas{
-  background-color: white;
-  float: left;
-}
+
 aside {
-  background-color: red;
+  margin-top: 30px;
   float: right;
-  height: 600px;
-  width: 200px;
+  height: 500px;
+  width: 40%;
 }
+
 aside h2 {
   font-size: 26px;
   margin: 10px 0px;
   text-align: center;
 }
+
 aside p {
   font-size: 20px;
   text-align: center;
 }
+
 audio {
-  margin-top: 296px;
+  width: 750px;
+}
+
+#aboutUsHeader {
+  margin-bottom: 60px;
+  margin-top: 60px;
+  font-size: 3rem;
+}
+
+.aboutusflex{
+  display: flex;
+  margin-bottom: 25px;
+  }
+  
+.aboutusflex div {
+  width: 25%;
+  justify-content: space-around;
+  margin: auto;
+  text-align: center;
+}
+
+.aboutusflextwo{
+  display: flex;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 75px;
+  }
+
+.aboutusflextwo div {
+  width: 25%;
+  justify-content: space-around;
+  margin: auto;
+  text-align: center;
+}
+
+table * {
+  margin-top: 50px;
+  padding: 20px;
+  font-size: 3rem;
+  text-shadow: 4px 4px 8px rgb(105, 96, 96);
+  }
+
+th {
+  font-size: 4rem;
+  padding-bottom: 40px;
+}
+
+table td{
+  padding-top: 10px;
+  text-align: center;
+  padding: 25px;
+}
+
+tfoot td:hover {
+  background-color: yellow;
+}
+
+#scoreTable {
+  width: 80%;
+  margin: auto;
+  padding-top: 100px;
+}
+
+#firstScore {
+  color: red;
+}
+
+#secondScore {
+  color: orange;
+}
+
+#thirdScore {
+  color: yellow;
+}
+
+#fourthScore {
+  color: rgb(5, 201, 5);
+}
+
+#fifthScore {
+  color: rgb(35, 51, 190);
+}
+
+#sixthScore {
+  color: rgb(162, 0, 255);
+}
+
+#seventhScore {
+  color: rgb(245, 98, 245);
+}
+
+#tryAgain:hover {
+  background-color: yellow;
+}
+
+div img{
   width: 200px;
+  height: 200px;
+  border-radius: 25%;
 }
 
-/* Scroll for Instructions */
-.scroll{
-  width: 110px;
-  height: 110px;
-  overflow: scroll;
+a:hover {
+  color: lime;
 }
 
-ul {
-  padding-top: 40px;
+a:link {
+  color: yellow;
+}
+
+a:active {
+  color: hotpink;
+}
+
+footer {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+}
+
+@keyframes High-Score {
+  from {color: red;}
+  to {color: yellow;}
+}
+  
+tr th {
+   animation: High-Score 1s infinite;
+}
+
+@keyframes rainbow-text {
+  0% {
+    color: #e87d7d;
+  }
+  2% {
+    color: #e88a7d;
+  }
+  4% {
+    color: #e8977d;
+  }
+  6% {
+    color: #e8a47d;
+  }
+  8% {
+    color: #e8b07d;
+  }
+  10% {
+    color: #e8bd7d;
+  }
+  12% {
+    color: #e8ca7d;
+  }
+  14% {
+    color: #e8d77d;
+  }
+  16% {
+    color: #e8e47d;
+  }
+  18% {
+    color: #dfe87d;
+  }
+  20% {
+    color: #d3e87d;
+  }
+  22% {
+    color: #c6e87d;
+  }
+  24% {
+    color: #b9e87d;
+  }
+  26% {
+    color: #ace87d;
+  }
+  28% {
+    color: #9fe87d;
+  }
+  30% {
+    color: #92e87d;
+  }
+  32% {
+    color: #86e87d;
+  }
+  34% {
+    color: #7de881;
+  }
+  36% {
+    color: #7de88e;
+  }
+  38% {
+    color: #7de89b;
+  }
+  40% {
+    color: #7de8a8;
+  }
+  42% {
+    color: #7de8b5;
+  }
+  44% {
+    color: #7de8c1;
+  }
+  46% {
+    color: #7de8ce;
+  }
+  48% {
+    color: #7de8db;
+  }
+  50% {
+    color: #7de8e8;
+  }
+  52% {
+    color: #7ddbe8;
+  }
+  54% {
+    color: #7dcee8;
+  }
+  56% {
+    color: #7dc1e8;
+  }
+  58% {
+    color: #7db5e8;
+  }
+  60% {
+    color: #7da8e8;
+  }
+  62% {
+    color: #7d9be8;
+  }
+  64% {
+    color: #7d8ee8;
+  }
+  66% {
+    color: #7d81e8;
+  }
+  68% {
+    color: #867de8;
+  }
+  70% {
+    color: #927de8;
+  }
+  72% {
+    color: #9f7de8;
+  }
+  74% {
+    color: #ac7de8;
+  }
+  76% {
+    color: #b97de8;
+  }
+  78% {
+    color: #c67de8;
+  }
+  80% {
+    color: #d37de8;
+  }
+  82% {
+    color: #df7de8;
+  }
+  84% {
+    color: #e87de4;
+  }
+  86% {
+    color: #e87dd7;
+  }
+  88% {
+    color: #e87dca;
+  }
+  90% {
+    color: #e87dbd;
+  }
+  92% {
+    color: #e87db0;
+  }
+  94% {
+    color: #e87da4;
+  }
+  96% {
+    color: #e87d97;
+  }
+  98% {
+    color: #e87d8a;
+  }
+  100% {
+    color: #e87d7d;
+  }
+}
+.rainbow-text {
+  animation: rainbow-text 1s infinite;
 }
