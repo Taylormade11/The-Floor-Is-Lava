@@ -182,7 +182,7 @@ function goalCollision() {
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
-  if (ourSpriteCharacter.y > 540) {
+  if (ourSpriteCharacter.y + ourSpriteCharacter.height > 570) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
