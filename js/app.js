@@ -28,25 +28,25 @@ var pauseDelay = 0;
 // tile map for level 1 is black block rest are white
 var levelMap = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2],
-  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,2,2,2],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2],
+  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,2,2,2],
   [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],
-  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
+  [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
+  [1,1,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
 var tileSrc = new Image();
@@ -74,18 +74,7 @@ function renderblue(){
   }
 }
 
-function renderLava(){
-  var tileLava = document.getElementById('lava-tile');
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j <levelColumn; j++){
-      if(levelMap[i][j]===3){
-        context.drawImage(tileLava, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
-// renderLava();
+CreateFloor();
 
 var ourSpriteCharacter;
 var gameFloors;
@@ -98,20 +87,19 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
   ourSpriteCharacter = new Sprite(27, 27, 60, 400);
-  // gameFloors = new CreateFloor(7150, 40, 0, 540);
+  gameFloors = new CreateFloor(7150, 40, 0, 540);
   gameScreen.start();
-  renderLava();
   renderLevel();
   renderblue();
 }
 
-// // Creates floor with parameters fed, may be able to feed it multiple blocks and compare all floors for object detection at one time.
-// function CreateFloor(width, height, x, y) {
-//   var canvas = document.getElementById('game-screen');
-//   var ctx = canvas.getContext('2d');
-//   ctx.fillStyle = 'red';
-//   ctx.fillRect(x, y, width, height);
-// }
+// Creates floor with parameters fed, may be able to feed it multiple blocks and compare all floors for object detection at one time.
+function CreateFloor(width, height, x, y) {
+  var canvas = document.getElementById('game-screen');
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'red';
+  ctx.fillRect(x, y, width, height);
+}
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
 var gameScreen = {
@@ -158,7 +146,7 @@ function Sprite(width, height, x, y) {
   this.gravity = 4;
   this.update = function() {
     var ctx = gameScreen.context;
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'black';
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
   this.updatedPosition = function() {
@@ -199,7 +187,9 @@ function lavaCollision() {
 function cielCollision() {
   if (ourSpriteCharacter.y <= 0 + tileSize) {
     ourSpriteCharacter.y = 0 + tileSize;
-    thud.play(); }
+    thud.play();
+    console.log('oof!!!');
+  }
 }
 
 // Looks for a collision between the sprite and the inner blocks and side walls (not cieling or lava)
@@ -273,8 +263,8 @@ function spriteMovement() {
 function updateGameArea() {
   renderLevel();
   renderblue();
-  renderLava();
   gameScreen.clear();
+
   spriteMovement();
 
   togglePause();
@@ -283,7 +273,7 @@ function updateGameArea() {
     ourSpriteCharacter.update();
   }
 
-  // CreateFloor(7150, 40, 0, 560);
+  CreateFloor(7150, 40, 0, 560);
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
@@ -299,5 +289,21 @@ function updateGameArea() {
 
 startGame();
 renderLevel();
-renderblue();
-renderLava();
+
+
+var highScore = {
+  1650000: 'MF',
+  1350000: 'AB',
+  1750000: 'AG',
+  1100000: 'CL',
+  1000000: 'CM',
+  900000: 'JF',
+  700000: 'AAA',
+
+};
+var sortable = [];
+for (var initials in highScore) {
+  sortable.push([parseInt(initials), highScore[parseInt(initials)]]);
+}
+
+sortable.sort(function(a, b){return b[0] - a[0];});
