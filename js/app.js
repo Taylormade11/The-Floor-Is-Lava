@@ -9,18 +9,13 @@ var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
 var secs = 0;
-var score = 0;
+var score = null;
 var scoreInterval = setInterval(function(){
   secs++;
-  var score = startScore - (secs * 50000);
+  score = startScore - (secs * 50000);
   var display = document.getElementById('time');
   display.textContent = secs + ' seconds ' + score;
-  localStorage.setItem('variable-score', score);
-  // console.log(score);
-
 }, 1000);
-console.log(scoreInterval.secs);
-console.log(scoreInterval.score);
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -165,10 +160,7 @@ function goalCollision() {
   score;
   if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    console.log(score);
-    score = parseInt(localStorage.getItem('variable-score'));
-    console.log(score);
-    score + 500000;
+    score = score+500000;
     localStorage.setItem('local-score', score);
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
