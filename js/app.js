@@ -1,7 +1,6 @@
 'use strict';
 var userInitials = '';
 var startScore = 2000000;
-var score = 2000000;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -10,15 +9,18 @@ var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
 var secs = 0;
+var score = 0;
 var scoreInterval = setInterval(function(){
-  secs++; console.log(secs);
+  secs++;
   var score = startScore - (secs * 50000);
   var display = document.getElementById('time');
   display.textContent = secs + ' seconds ' + score;
-  console.log(score);
-}, 1000);
+  localStorage.setItem('variable-score', score);
+  // console.log(score);
 
-console.log(score);
+}, 1000);
+console.log(scoreInterval.secs);
+console.log(scoreInterval.score);
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -158,9 +160,17 @@ function Sprite(width, height, x, y) {
 
 // Looks for a collision with the goal - to stop the clock and beat the game
 function goalCollision() {
+  score;
   if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
+    console.log(score);
+    score = parseInt(localStorage.getItem('variable-score'));
+    console.log(score);
+    score + 500000;
+    localStorage.setItem('local-score', score);
     alert('You win!!!');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
@@ -171,11 +181,11 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     score = 0;
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
     localStorage.setItem('local-score', score);
     console.log(score);
     alert('sorry you hit the lava, you lose');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
