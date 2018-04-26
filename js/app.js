@@ -161,6 +161,7 @@ function goalCollision() {
   if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
     alert('You win!!!');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
   }
 }
 
@@ -171,11 +172,11 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     score = 0;
-    userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
     localStorage.setItem('local-score', score);
     console.log(score);
     alert('sorry you hit the lava, you lose');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
   }
 }
 
