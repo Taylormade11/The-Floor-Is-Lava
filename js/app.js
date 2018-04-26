@@ -54,11 +54,13 @@ var levelMap = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
+var tileSrc = new Image();
+tileSrc.src = 'assets/tiles.png';
+
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
-  var tileSrc = document.getElementById('tiles');
   for(var i=0; i < levelRow; i++){
-    for(var j=0; j <levelColumn; j++){
+    for(var j=0; j < levelColumn; j++){
       if(levelMap[i][j]===1){
         context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
