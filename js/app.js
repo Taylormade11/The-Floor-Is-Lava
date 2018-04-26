@@ -1,5 +1,5 @@
 'use strict';
-
+var userInitials = '';
 var startScore = 2000000;
 
 //select the id for canvas to draw to
@@ -7,21 +7,15 @@ var canvas = document.getElementById('game-screen');
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
-window.onload = function() {
-  var secs = 0;
-  document.addEventListener('keydown', function(keyInput) {
-    if (keyInput.which ===83) {
-      setInterval(function(){
-        secs++; console.log(secs);
-        var score = startScore - (secs * 50000);
-        var display = document.getElementById('time');
-        display.textContent = secs + ' seconds ' + score;
-        console.log(score);
-      }, 1000);
-    }
-  });
-};
-
+// Calculates player's score - decrements over time
+var secs = 0;
+var score = null;
+var scoreInterval = setInterval(function(){
+  secs++;
+  score = startScore - (secs * 50000);
+  var display = document.getElementById('time');
+  display.textContent = secs + ' seconds ' + score;
+}, 1000);
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -55,11 +49,13 @@ var levelMap = [
   [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
 ];
 
+var tileSrc = new Image();
+tileSrc.src = 'assets/brick.png';
+
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
-  var tileSrc = document.getElementById('brick-tile');
   for(var i=0; i < levelRow; i++){
-    for(var j=0; j <levelColumn; j++){
+    for(var j=0; j < levelColumn; j++){
       if(levelMap[i][j]===1){
         context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
@@ -137,6 +133,7 @@ var gameScreen = {
   },
   stop : function() {
     clearInterval(this.interval);
+    clearInterval(scoreInterval);
   },
 
   // clears the entire canvas except for the floor area & a little bit above it, smears the block on diagonal descent, but preserves the block for now.
@@ -170,13 +167,31 @@ function Sprite(width, height, x, y) {
   };
 }
 
+// Looks for a collision with the goal - to stop the clock and beat the game
+function goalCollision() {
+  score;
+  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+    gameScreen.stop();
+    score = score+500000;
+    localStorage.setItem('local-score', score);
+    alert('You win!!!');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
+  }
+}
+
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y > 540) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
+    score = 0;
+    localStorage.setItem('local-score', score);
+    console.log(score);
     alert('sorry you hit the lava, you lose');
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
@@ -278,6 +293,8 @@ function updateGameArea() {
 
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
+
+  goalCollision();
 }
 
 startGame();
