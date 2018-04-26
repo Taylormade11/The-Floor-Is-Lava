@@ -310,3 +310,8 @@ var storeGoal = localStorage.getItem('local-score');
 var storeInitial= localStorage.getItem('local-user-initials');
 sortable.push([parseInt(storeGoal), storeInitial]);
 sortable.sort(function(a, b){return b[0] - a[0];});
+
+function tableContent () {
+  var firstFill = document.getElementById('firstScore');
+  firstFill.textContent = sortable[0][0] + sortable[0][1];
+} tableContent();
