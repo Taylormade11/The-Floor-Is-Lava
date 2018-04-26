@@ -34,26 +34,31 @@ var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,5,2],
-  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],
-  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-  [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,4,4,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1],
+  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 4, 7, 1],
+  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 4, 7, 7, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 7, 7, 7, 1],
+  [1, 0, 6, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 7, 7, 7, 1],
+  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1]
 ];
 
 var tileSrc = new Image();
@@ -69,46 +74,6 @@ function renderLevel(){
     }
   }
 }
-
-var platSrc = new Image();
-platSrc.src = 'assets/grassdirt.png';
-
-function renderPlats(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===4){
-        context.drawImage(platSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
-var signSrc = new Image();
-signSrc.src = 'assets/direction.png';
-
-function renderSign(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===6){
-        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
-var goalSrc = new Image();
-goalSrc.src = 'assets/goal.png';
-
-function renderGoal(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===5){
-        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
 
 function renderblue(){
   context.fillStyle='#00FFFF';
@@ -127,6 +92,58 @@ function renderLava(){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===3){
         context.drawImage(tileLava, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var grassSrc = new Image();
+grassSrc.src = 'assets/grassdirt.png';
+
+function renderGrass(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===4){
+        context.drawImage(grassSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+function renderGoal(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===5){
+        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+function renderSign(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===6){
+        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var dirtSrc = new Image();
+dirtSrc.src = 'assets/dirt.png';
+
+function renderDirt(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===7){
+        context.drawImage(dirtSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -325,11 +342,12 @@ function spriteFriction() {
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
-  renderPlats();
+  renderGrass();
   renderGoal();
   renderSign();
   renderblue();
   renderLava();
+  renderDirt();
   gameScreen.clear();
 
   spriteFriction();
