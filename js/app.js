@@ -1,6 +1,7 @@
 'use strict';
 
 var startScore = 2000000;
+var score = 2000000;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -18,6 +19,9 @@ window.onload = function() {
         display.textContent = secs + ' seconds ' + score;
         console.log(score);
       }, 1000);
+      if (score === 0) {
+        clearInterval();
+      }
     }
   });
 };
