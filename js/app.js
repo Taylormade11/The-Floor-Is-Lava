@@ -1,6 +1,7 @@
 'use strict';
-
+var userInitials = '';
 var startScore = 2000000;
+var score = 2000000;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -17,6 +18,7 @@ var scoreInterval = setInterval(function(){
   console.log(score);
 }, 1000);
 
+console.log(score);
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
 // variable for size of columns and rows on levelMap
@@ -168,6 +170,11 @@ function lavaCollision() {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
+    score = 0;
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
+    console.log(score);
     alert('sorry you hit the lava, you lose');
   }
 }
