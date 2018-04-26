@@ -255,6 +255,8 @@ function lavaCollision() {
 function cielCollision() {
   if (ourSpriteCharacter.y <= 0 + tileSize) {
     ourSpriteCharacter.y = 0 + tileSize;
+    ourSpriteCharacter.speedY = 1;
+    jumpDelay = 0;
     thud.play(); }
 }
 
