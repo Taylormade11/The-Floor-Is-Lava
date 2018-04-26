@@ -2,9 +2,12 @@
 var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
-var firstFill = document.getElementById('firstScore');
-var spriteGuyimage = new Image();
-spriteGuyimage.src = 'assets/spacePirate.png';
+
+var spriteGuyImageRight = new Image(27,27);
+spriteGuyImageRight.src = 'assets/spacePirate.png';
+
+var spriteGuyImageLeft = new Image(27,27);
+spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -31,26 +34,31 @@ var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,5,2],
-  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],
-  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-  [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,4,4,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1],
+  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 4, 7, 1],
+  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 4, 7, 7, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 7, 7, 7, 1],
+  [1, 0, 6, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 7, 7, 7, 1],
+  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1]
 ];
 
 var tileSrc = new Image();
@@ -66,46 +74,6 @@ function renderLevel(){
     }
   }
 }
-
-var platSrc = new Image();
-platSrc.src = 'assets/grassdirt.png';
-
-function renderPlats(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===4){
-        context.drawImage(platSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
-var signSrc = new Image();
-signSrc.src = 'assets/direction.png';
-
-function renderSign(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===6){
-        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
-var goalSrc = new Image();
-goalSrc.src = 'assets/goal.png';
-
-function renderGoal(){
-  for(var i=0; i < levelRow; i++){
-    for(var j=0; j < levelColumn; j++){
-      if(levelMap[i][j]===5){
-        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
-      }
-    }
-  }
-}
-
 
 function renderblue(){
   context.fillStyle='#00FFFF';
@@ -129,9 +97,61 @@ function renderLava(){
   }
 }
 
+var grassSrc = new Image();
+grassSrc.src = 'assets/grassdirt.png';
+
+function renderGrass(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===4){
+        context.drawImage(grassSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+function renderGoal(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===5){
+        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+function renderSign(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===6){
+        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var dirtSrc = new Image();
+dirtSrc.src = 'assets/dirt.png';
+
+function renderDirt(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===7){
+        context.drawImage(dirtSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
 var ourSpriteCharacter;
 var gameFloors;
-var paused = false; // Game starts in a paused state
+var paused = false;
 
 var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
@@ -191,7 +211,11 @@ function Sprite(width, height, x, y) {
   this.gravity = 4;
   this.update = function() {
     var ctx = gameScreen.context;
-    ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
+    if (ourSpriteCharacter.speedX >= 0) {
+      ctx.drawImage(spriteGuyImageRight, this.x, this.y, this.width, this.height);
+    } else if (ourSpriteCharacter.speedX < 0) {
+      ctx.drawImage(spriteGuyImageLeft, this.x, this.y, this.width, this.height);
+    }
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
@@ -232,6 +256,8 @@ function lavaCollision() {
 function cielCollision() {
   if (ourSpriteCharacter.y <= 0 + tileSize) {
     ourSpriteCharacter.y = 0 + tileSize;
+    ourSpriteCharacter.speedY = 1;
+    jumpDelay = 0;
     thud.play(); }
 }
 
@@ -302,8 +328,12 @@ function spriteMovement() {
   } else {
     ourSpriteCharacter.speedY = 0;
   }
+  if (gameScreen.pressed && (gameScreen.pressed[38] || gameScreen.pressed[87])) {
+    ourSpriteCharacter.speedY = -1.8;
+  }
 }
 
+// Defines the friction to be applied when the sprite is moved across the x-axis
 function spriteFriction() {
   if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
     ourSpriteCharacter.speedX -= .5;
@@ -340,11 +370,12 @@ function tableContent() {
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
-  renderPlats();
+  renderGrass();
   renderGoal();
   renderSign();
   renderblue();
   renderLava();
+  renderDirt();
   gameScreen.clear();
 
   spriteFriction();
@@ -365,11 +396,8 @@ function updateGameArea() {
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
 
+  // Checks if sprite has impacted the goal
   goalCollision();
 }
 
 startGame();
-renderLevel();
-renderblue();
-renderLava();
-
