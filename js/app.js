@@ -55,7 +55,7 @@ var levelMap = [
 ];
 
 var tileSrc = new Image();
-tileSrc.src = 'assets/tiles.png';
+tileSrc.src = 'assets/brick.png';
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
