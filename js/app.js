@@ -192,6 +192,12 @@ function Sprite(width, height, x, y) {
   this.update = function() {
     var ctx = gameScreen.context;
     ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
+    // if (ourSpriteCharacter.speedX > 0) {
+    //   ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
+    // } else if (ourSpriteCharacter.speedX < 0) {
+    //   ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
+    //   spriteGuyimage.rotate(180);
+    // }
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
