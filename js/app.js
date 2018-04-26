@@ -2,7 +2,7 @@
 var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
-
+var firstFill = document.getElementById('firstScore');
 var spriteGuyimage = new Image();
 spriteGuyimage.src = 'assets/spacePirate.png';
 
@@ -13,7 +13,7 @@ var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
 var secs = 0;
-var score = null;
+var score = 0;
 var scoreInterval = setInterval(function(){
   secs++;
   score = startScore - (secs * 50000);
@@ -209,6 +209,7 @@ function goalCollision() {
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    tableContent();
   }
 }
 
@@ -331,9 +332,9 @@ var storeInitial= localStorage.getItem('local-user-initials');
 sortable.push([parseInt(storeGoal), storeInitial]);
 sortable.sort(function(a, b){return b[0] - a[0];});
 
-function tableContent () {
-  var firstFill = document.getElementById('firstScore');
-  firstFill.textContent = sortable[0][0] + ' ' + sortable[0][1];
+function tableContent() {
+  // firstFill.textContent = sortable[0][0] + ' ' + sortable[0][1];
+  firstFill.textContent = 'boop';
 }
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
