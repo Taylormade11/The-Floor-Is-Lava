@@ -43,7 +43,7 @@ var levelMap = [
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
   [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,4,4,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
   [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
@@ -71,6 +71,19 @@ function renderPlats(){
     for(var j=0; j < levelColumn; j++){
       if(levelMap[i][j]===4){
         context.drawImage(platSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+function renderSign(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===6){
+        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -301,6 +314,7 @@ function updateGameArea() {
   renderLevel();
   renderPlats();
   renderGoal();
+  renderSign();
   renderblue();
   renderLava();
   gameScreen.clear();
