@@ -3,8 +3,11 @@ var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
 
-var spriteGuyimage = new Image();
-spriteGuyimage.src = 'assets/spacePirate.png';
+var spriteGuyImageRight = new Image();
+spriteGuyImageRight.src = 'assets/spacePirate.png';
+
+var spriteGuyImageLeft = new Image();
+spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -191,7 +194,11 @@ function Sprite(width, height, x, y) {
   this.gravity = 4;
   this.update = function() {
     var ctx = gameScreen.context;
-    ctx.drawImage(spriteGuyimage, this.x, this.y, this.width, this.height);
+    if (ourSpriteCharacter.speedX >= 0) {
+      ctx.drawImage(spriteGuyImageRight, this.x, this.y, this.width, this.height);
+    } else if (ourSpriteCharacter.speedX < 0) {
+      ctx.drawImage(spriteGuyImageLeft, this.x, this.y, this.width, this.height);
+    }
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
