@@ -304,8 +304,10 @@ function spriteMovement() {
 }
 
 function spriteFriction() {
-  if (spriteGrounded === true && ourSpriteCharacter.speedX !== 0) {
-    ourSpriteCharacter.speedX = 0;
+  if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
+    ourSpriteCharacter.speedX -= .5;
+  } else if (spriteGrounded === true && ourSpriteCharacter.speedX < 0) {
+    ourSpriteCharacter.speedX += .5;
   }
 }
 
