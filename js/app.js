@@ -134,7 +134,7 @@ function renderLava(){
 
 var ourSpriteCharacter;
 var gameFloors;
-var paused = false; // Game starts in a paused state
+var paused = false;
 
 var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/jump.wav');
@@ -308,8 +308,12 @@ function spriteMovement() {
   } else {
     ourSpriteCharacter.speedY = 0;
   }
+  if (gameScreen.pressed && (gameScreen.pressed[38] || gameScreen.pressed[87])) {
+    ourSpriteCharacter.speedY = -1.8;
+  }
 }
 
+// Defines the friction to be applied when the sprite is moved across the x-axis
 function spriteFriction() {
   if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
     ourSpriteCharacter.speedX -= .5;
@@ -346,10 +350,8 @@ function updateGameArea() {
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
 
+  // Checks if sprite has impacted the goal
   goalCollision();
 }
 
 startGame();
-renderLevel();
-renderblue();
-renderLava();
