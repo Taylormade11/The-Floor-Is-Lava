@@ -3,10 +3,10 @@ var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
 
-var spriteGuyImageRight = new Image();
+var spriteGuyImageRight = new Image(27,27);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
 
-var spriteGuyImageLeft = new Image();
+var spriteGuyImageLeft = new Image(27,27);
 spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
 //select the id for canvas to draw to
