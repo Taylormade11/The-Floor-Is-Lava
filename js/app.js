@@ -303,6 +303,12 @@ function spriteMovement() {
   }
 }
 
+function spriteFriction() {
+  if (spriteGrounded === true && ourSpriteCharacter.speedX !== 0) {
+    ourSpriteCharacter.speedX = 0;
+  }
+}
+
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
@@ -312,6 +318,8 @@ function updateGameArea() {
   renderblue();
   renderLava();
   gameScreen.clear();
+
+  spriteFriction();
   spriteMovement();
 
   togglePause();
