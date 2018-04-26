@@ -1,6 +1,7 @@
 'use strict';
 var userInitials = '';
 var startScore = 2000000;
+var spriteGrounded = false;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
@@ -170,7 +171,7 @@ function Sprite(width, height, x, y) {
 // Looks for a collision with the goal - to stop the clock and beat the game
 function goalCollision() {
   score;
-  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+  if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
     score = score+500000;
     localStorage.setItem('local-score', score);
@@ -182,7 +183,7 @@ function goalCollision() {
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
-  if (ourSpriteCharacter.y + ourSpriteCharacter.height > 570) {
+  if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
     console.log('sorry you hit the lava, you lose');
     gameScreen.stop();
     thud.play();
@@ -213,6 +214,7 @@ function wallCollision() {
   if(ourSpriteCharacter.speedY<=0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
       ourSpriteCharacter.y=(baseRow)*tileSize;
+      spriteGrounded = true;
     }
   }
 
@@ -259,9 +261,10 @@ function spriteMovement() {
     ourSpriteCharacter.speedX = 3;
     sideways.play();
   }
-  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && spriteGrounded === true && gameScreen.pressed && gameScreen.pressed[32]) {
     jump.play();
     jumpDelay += 1200;
+    spriteGrounded = false;
   } if (jumpDelay > 400 && jumpDelay <= 1200) {
     ourSpriteCharacter.speedY = -7;
   } else {
@@ -282,8 +285,6 @@ function updateGameArea() {
     ourSpriteCharacter.updatedPosition();
     ourSpriteCharacter.update();
   }
-
-  // CreateFloor(7150, 40, 0, 560);
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
