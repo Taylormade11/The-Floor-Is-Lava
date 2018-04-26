@@ -21,7 +21,7 @@ var scoreInterval = setInterval(function(){
   secs++;
   score = startScore - (secs * 50000);
   var display = document.getElementById('time');
-  display.textContent = secs + ' seconds ' + score;
+  display.textContent = (40 -secs) + ' seconds ' + score;
 }, 1000);
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
