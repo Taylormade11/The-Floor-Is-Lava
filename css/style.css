@@ -80,6 +80,7 @@ nav button:hover {
 
 #win-overlay {
   display: none;
+  font-size: 30px;
   top: 214px;
   height: 600px;
   width: 750px;
@@ -88,14 +89,14 @@ nav button:hover {
 }
 #win-overlay p {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
 
 #lose-overlay {
-  /* display: none; */
+  display: none;
   top: 214px;
   height: 600px;
   width: 750px;
@@ -104,15 +105,18 @@ nav button:hover {
 }
 
 #lose-overlay p {
+  font-size: 20px;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+  width: 700px;
 }
 #lose-overlay button {
+  font-size: 16px;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
