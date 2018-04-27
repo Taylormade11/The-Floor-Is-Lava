@@ -29,7 +29,6 @@ nav{
   background-color: black;
   margin-bottom: 30px;
   display: block;
-  /* float: right; */
 }
 
 #gameScreen {
@@ -76,6 +75,69 @@ nav button:hover {
   width: 90%;
   margin: auto;
   padding-bottom: 100px;
+  /* position: relative; */
+}
+
+#win-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+  font-size: 30px;
+  top: 493px;
+  height: 600px;
+  width: 750px;
+  position: absolute;
+  text-align: center;
+}
+#win-overlay p {
+  background: none;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#win-overlay button {
+  background: none;
+  font-size: 16px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#lose-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+  top: 493px;
+  height: 600px;
+  width: 750px;
+  position: absolute;
+  text-align: center;
+}
+
+#lose-overlay p {
+  background: none;
+  font-size: 20px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 700px;
+}
+
+#lose-overlay button {
+  background: none;
+  font-size: 16px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 aside {
@@ -227,6 +289,10 @@ div img{
   width: 200px;
   height: 200px;
   border-radius: 25%;
+}
+
+a {
+  text-decoration: none;
 }
 
 a:hover {

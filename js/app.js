@@ -3,10 +3,10 @@ var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
 
-var spriteGuyImageRight = new Image(27,27);
+var spriteGuyImageRight = new Image(28,28);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
 
-var spriteGuyImageLeft = new Image(27,27);
+var spriteGuyImageLeft = new Image(28,28);
 spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
 //select the id for canvas to draw to
@@ -154,7 +154,7 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
-  ourSpriteCharacter = new Sprite(27, 27, 60, 400);
+  ourSpriteCharacter = new Sprite(28, 28, 60, 400);
   gameScreen.start();
   renderLava();
   renderLevel();
@@ -228,6 +228,8 @@ function goalCollision() {
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+
+    document.getElementById('win-overlay').style.display = 'block';
   }
 }
 
@@ -243,6 +245,8 @@ function lavaCollision() {
     alert('sorry you hit the lava, you lose');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+
+    document.getElementById('lose-overlay').style.display = 'block';
   }
 }
 
