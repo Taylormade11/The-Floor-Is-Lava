@@ -228,6 +228,8 @@ function goalCollision() {
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+
+    document.getElementById('win-overlay').style.display = 'block';
   }
 }
 
@@ -243,6 +245,8 @@ function lavaCollision() {
     alert('sorry you hit the lava, you lose');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+
+    document.getElementById('lose-overlay').style.display = 'block';
   }
 }
 
