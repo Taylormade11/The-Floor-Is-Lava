@@ -235,6 +235,7 @@ audio {
 .aboutusflex{
   display: flex;
   margin-bottom: 25px;
+
   }
   
 .aboutusflex div {
@@ -249,6 +250,7 @@ audio {
   margin-left: 15%;
   margin-right: 15%;
   margin-bottom: 75px;
+ 
   }
 
 .aboutusflextwo div {
@@ -256,6 +258,7 @@ audio {
   justify-content: space-around;
   margin: auto;
   text-align: center;
+ 
 }
 
 table * {
