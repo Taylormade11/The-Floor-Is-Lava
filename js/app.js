@@ -299,10 +299,14 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
+
+    document.getElementById('pause-overlay').style.display = 'block';
     console.log('paused');
   } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
+
+    document.getElementById('pause-overlay').style.display = 'none';
     console.log('unpaused');
   }
 }
