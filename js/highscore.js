@@ -8,19 +8,12 @@ var fifthFill = document.getElementById('fifthScore');
 var sixthFill = document.getElementById('sixthScore');
 var seventhFill = document.getElementById('seventhScore');
 
-// HighScore.parsedArray = JSON.parse(localStorage.getItem('past'));
-// var array = HighScore.parsedArray || [];
-
-
 var HighScore = {
-  1650000: 'MF',
-  1350000: 'AB',
-  1750000: 'AG',
-  1100000: 'CL',
-  1000000: 'CM',
-  900000: 'JF',
-  700000: 'AAA',
-
+  2150000: 'PR',
+  2100000: 'TE',
+  2050000: 'MAK',
+  2000000: 'CCH',
+  1900000: 'GB'
 };
 var sortable = [];
 for (var initials in HighScore) {
@@ -29,8 +22,6 @@ for (var initials in HighScore) {
 
 var userInitials= localStorage.getItem('local-user-initials');
 var userScore = localStorage.getItem('local-score');
-
-// var parsedUser = JSON.parse('Current User');
 
 sortable.push([parseInt(userScore), userInitials]);
 sortable.sort(function(a, b){return b[0] - a[0];});
