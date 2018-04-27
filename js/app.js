@@ -3,10 +3,10 @@ var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
 
-var spriteGuyImageRight = new Image(27,27);
+var spriteGuyImageRight = new Image(28,28);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
 
-var spriteGuyImageLeft = new Image(27,27);
+var spriteGuyImageLeft = new Image(28,28);
 spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
 //select the id for canvas to draw to
@@ -34,26 +34,26 @@ var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 1],
-  [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 7, 7, 1],
-  [1, 0, 6, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 7, 7, 7, 1],
-  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2],
+  [2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2],
+  [2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4,7,1],
+  [2,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,4,7,7,1],
+  [2,0,6,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,7,7,7,1],
+  [2,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
 var tileSrc = new Image();
@@ -70,12 +70,14 @@ function renderLevel(){
   }
 }
 
-function renderblue(){
-  context.fillStyle='#00FFFF';
+var clearSrc = new Image();
+clearSrc.src = 'assets/clear.png';
+
+function renderClear(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===2){
-        context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(clearSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -145,7 +147,6 @@ function renderDirt(){
 }
 
 var ourSpriteCharacter;
-var gameFloors;
 var paused = false;
 
 var thud = new Audio('audio/thud.wav');
@@ -154,11 +155,10 @@ var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
-  ourSpriteCharacter = new Sprite(27, 27, 60, 400);
+  ourSpriteCharacter = new Sprite(28, 28, 60, 400);
   gameScreen.start();
   renderLava();
   renderLevel();
-  renderblue();
 }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
@@ -228,7 +228,7 @@ function goalCollision() {
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
     localStorage.setItem('local-score', score);
-    // localStorage.setItem('user', userInitials);
+    document.getElementById('win-overlay').style.display = 'block';
   }
 }
 
@@ -244,6 +244,8 @@ function lavaCollision() {
     alert('sorry you hit the lava, you lose');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+
+    document.getElementById('lose-overlay').style.display = 'block';
   }
 }
 
@@ -343,7 +345,7 @@ function updateGameArea() {
   renderGrass();
   renderGoal();
   renderSign();
-  renderblue();
+  renderClear();
   renderLava();
   renderDirt();
   gameScreen.clear();

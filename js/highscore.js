@@ -32,13 +32,6 @@ var storeInitial= localStorage.getItem('local-user-initials');
 sortable.push([parseInt(storeGoal), storeInitial]);
 sortable.sort(function(a, b){return b[0] - a[0];});
 
-var array =
-function storeArray() {
-  array = [storeGoal, storeInitial];
-  var myJSON = JSON.stringify(array);
-  localStorage.setItem('past', myJSON);
-};
-
 function tableContent() {
   firstFill.textContent = sortable[0][0] + ' ' + sortable[0][1];
   secondFill.textContent = sortable[1][0] + ' ' + sortable[1][1];
@@ -50,4 +43,3 @@ function tableContent() {
 }
 
 tableContent();
-storeArray();
