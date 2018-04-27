@@ -365,8 +365,9 @@ function updateGameArea() {
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
-    ourSpriteCharacter.update();
   }
+
+  ourSpriteCharacter.update();
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
