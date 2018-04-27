@@ -24,10 +24,7 @@ for (var initials in HighScore) {
 }
 
 var userInitials= localStorage.getItem('local-user-initials');
-var userScore = localStorage.getItem('User Score');
-
-// var parsedUser = JSON.parse('Current User');
-
+var userScore = localStorage.getItem('local-store');
 sortable.push([parseInt(userScore), userInitials]);
 sortable.sort(function(a, b){return b[0] - a[0];});
 
