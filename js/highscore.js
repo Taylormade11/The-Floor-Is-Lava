@@ -8,10 +8,6 @@ var fifthFill = document.getElementById('fifthScore');
 var sixthFill = document.getElementById('sixthScore');
 var seventhFill = document.getElementById('seventhScore');
 
-// HighScore.parsedArray = JSON.parse(localStorage.getItem('past'));
-// var array = HighScore.parsedArray || [];
-
-
 var HighScore = {
   1650000: 'MF',
   1350000: 'AB',
