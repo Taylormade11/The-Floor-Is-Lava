@@ -79,6 +79,8 @@ nav button:hover {
 }
 
 #win-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
   display: none;
   font-size: 30px;
   top: 214px;
@@ -88,6 +90,7 @@ nav button:hover {
   text-align: center;
 }
 #win-overlay p {
+  background: none;
   position: absolute;
   top: 45%;
   left: 50%;
@@ -95,7 +98,19 @@ nav button:hover {
   -ms-transform: translate(-50%, -50%);
 }
 
+#win-overlay button {
+  background: none;
+  font-size: 16px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
 #lose-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
   display: none;
   top: 214px;
   height: 600px;
@@ -105,6 +120,7 @@ nav button:hover {
 }
 
 #lose-overlay p {
+  background: none;
   font-size: 20px;
   position: absolute;
   top: 45%;
@@ -113,7 +129,9 @@ nav button:hover {
   -ms-transform: translate(-50%, -50%);
   width: 700px;
 }
+
 #lose-overlay button {
+  background: none;
   font-size: 16px;
   position: absolute;
   top: 55%;
