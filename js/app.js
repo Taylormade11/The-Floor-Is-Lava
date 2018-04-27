@@ -18,13 +18,17 @@ var context = canvas.getContext('2d');
 var secs = 0;
 var score = null;
 var scoreInterval = setInterval(function(){
-  secs++;
-  score = startScore - (secs * 50000);
+  if (!paused) {
+    secs++;
+    score = startScore - (secs * 50000);
+  }
   var display = document.getElementById('time');
-  display.textContent = (40 -secs) + ' seconds ' + score;
+  display.textContent = (40 - secs) + ' seconds ' + score;
 }, 1000);
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
+
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
@@ -302,7 +306,7 @@ function togglePause() {
 
     document.getElementById('pause-overlay').style.display = 'block';
     console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+  } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
 
