@@ -1,8 +1,8 @@
 'use strict';
 
 var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/jump.wav');
-var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
 
 var spriteGuyImageRight = new Image(28,28);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
@@ -46,10 +46,12 @@ var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
 var scoreInterval = setInterval(function(){
-  secs++;
-  score = startScore - (secs * 50000);
+  if (!paused) {
+    secs++;
+    score = startScore - (secs * 50000);
+  }
   var display = document.getElementById('time');
-  display.textContent = (40 -secs) + ' seconds ' + score;
+  display.textContent = (40 - secs) + ' seconds ' + score;
 }, 1000);
 
 // size of the tiles (platforms) to be drawn
@@ -98,7 +100,7 @@ function renderClear(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===2){
-        context.drawImage(clearSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -226,29 +228,25 @@ function goalCollision() {
   score;
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    score = score+500000;
-    localStorage.setItem('User Score', score);
-    // localStorage.setItem('User', userInitials);
-    // var currentUser = new StoreUserAndScore(userInitials, score);
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    // var stringifiedUser = JSON.stringify(currentUser);
-    // localStorage.setItem('Current User', stringifiedUser);
-    localStorage.setItem('local-user-initials', userInitials);
+    score = score + 500000;
+
     document.getElementById('win-overlay').style.display = 'block';
+
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
-
-// function StoreUserAndScore(user, score) {
-//   this.userName = user;
-//   this.userScore = score;
-// }
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
-    gameScreen.stop();
     thud.play();
+    gameScreen.stop();
     document.getElementById('lose-overlay').style.display = 'block';
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
@@ -301,9 +299,11 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+    document.getElementById('pause-overlay').style.display = 'block';
+  } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
+    document.getElementById('pause-overlay').style.display = 'none';
   }
 }
 
@@ -357,8 +357,9 @@ function updateGameArea() {
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
-    ourSpriteCharacter.update();
   }
+
+  ourSpriteCharacter.update();
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
