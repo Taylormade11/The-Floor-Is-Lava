@@ -1,7 +1,8 @@
 'use strict';
-var userInitials = '';
-var startScore = 2000000;
-var spriteGrounded = false;
+
+var thud = new Audio('audio/thud.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
 
 var spriteGuyImageRight = new Image(28,28);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
@@ -9,14 +10,41 @@ spriteGuyImageRight.src = 'assets/spacePirate.png';
 var spriteGuyImageLeft = new Image(28,28);
 spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
 
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+var grassSrc = new Image();
+grassSrc.src = 'assets/grassdirt.png';
+
+var tileSrc = new Image();
+tileSrc.src = 'assets/darkstone.png';
+
+var clearSrc = new Image();
+clearSrc.src = 'assets/clear.png';
+
+var dirtSrc = new Image();
+dirtSrc.src = 'assets/dirt.png';
+
+var ourSpriteCharacter;
+var paused = false;
+var userInitials = '';
+var startScore = 2000000;
+var spriteGrounded = false;
+var secs = 0;
+var score = null;
+var jumpDelay = 0;
+var pauseDelay = 0;
+
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
+
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
-var secs = 0;
-var score = null;
 var scoreInterval = setInterval(function(){
   if (!paused) {
     secs++;
@@ -32,9 +60,6 @@ var tileSize = 30;
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
-
-var jumpDelay = 0;
-var pauseDelay = 0;
 
 // tile map for level 1 is black block rest are white
 var levelMap = [
@@ -60,9 +85,6 @@ var levelMap = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
-var tileSrc = new Image();
-tileSrc.src = 'assets/darkstone.png';
-
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
   for(var i=0; i < levelRow; i++){
@@ -74,14 +96,11 @@ function renderLevel(){
   }
 }
 
-var clearSrc = new Image();
-clearSrc.src = 'assets/clear.png';
-
 function renderClear(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===2){
-        context.drawImage(clearSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -98,9 +117,6 @@ function renderLava(){
   }
 }
 
-var grassSrc = new Image();
-grassSrc.src = 'assets/grassdirt.png';
-
 function renderGrass(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j < levelColumn; j++){
@@ -110,9 +126,6 @@ function renderGrass(){
     }
   }
 }
-
-var goalSrc = new Image();
-goalSrc.src = 'assets/goal.png';
 
 function renderGoal(){
   for(var i=0; i < levelRow; i++){
@@ -124,9 +137,6 @@ function renderGoal(){
   }
 }
 
-var signSrc = new Image();
-signSrc.src = 'assets/direction.png';
-
 function renderSign(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j < levelColumn; j++){
@@ -137,8 +147,6 @@ function renderSign(){
   }
 }
 
-var dirtSrc = new Image();
-dirtSrc.src = 'assets/dirt.png';
 
 function renderDirt(){
   for(var i=0; i < levelRow; i++){
@@ -149,13 +157,6 @@ function renderDirt(){
     }
   }
 }
-
-var ourSpriteCharacter;
-var paused = false;
-
-var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/step.wav');
-var jump = new Audio('audio/jump.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
@@ -240,13 +241,9 @@ function goalCollision() {
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
-    console.log('sorry you hit the lava, you lose');
-    gameScreen.stop();
     thud.play();
-    score = 0;
-
+    gameScreen.stop();
     document.getElementById('lose-overlay').style.display = 'block';
-
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
     localStorage.setItem('local-score', score);
@@ -302,15 +299,11 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
-
     document.getElementById('pause-overlay').style.display = 'block';
-    console.log('paused');
   } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
-
     document.getElementById('pause-overlay').style.display = 'none';
-    console.log('unpaused');
   }
 }
 

@@ -27,9 +27,12 @@ for (var initials in HighScore) {
   sortable.push([parseInt(initials), HighScore[parseInt(initials)]]);
 }
 
-var storeGoal = localStorage.getItem('local-score');
-var storeInitial= localStorage.getItem('local-user-initials');
-sortable.push([parseInt(storeGoal), storeInitial]);
+var userInitials= localStorage.getItem('local-user-initials');
+var userScore = localStorage.getItem('User Score');
+
+// var parsedUser = JSON.parse('Current User');
+
+sortable.push([parseInt(userScore), userInitials]);
 sortable.sort(function(a, b){return b[0] - a[0];});
 
 function tableContent() {
