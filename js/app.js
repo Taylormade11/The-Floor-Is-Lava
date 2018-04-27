@@ -224,11 +224,20 @@ function goalCollision() {
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
     score = score+500000;
-    localStorage.setItem('local-score', score);
+    localStorage.setItem('User Score', score);
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('User', userInitials);
+    var currentUser = new StoreUserAndScore(userInitials, score);
+    console.log(currentUser);
+    var stringifiedUser = JSON.stringify(currentUser);
+    localStorage.setItem('Current User', stringifiedUser);
   }
+}
+
+function StoreUserAndScore(user, score) {
+  this.userName = user;
+  this.userScore = score;
 }
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
@@ -238,11 +247,6 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     score = 0;
-    localStorage.setItem('local-score', score);
-    console.log(score);
-    alert('sorry you hit the lava, you lose');
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
