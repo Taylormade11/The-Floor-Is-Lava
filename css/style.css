@@ -244,10 +244,7 @@ audio {
   margin: auto;
   text-align: center;
   height: 400px;
-  border: 2px solid grey;
-  border-radius: 10px;
   padding:10px;
-  box-shadow: 2px 2px;
   font-size: 1rem;
 }
 
@@ -266,10 +263,6 @@ audio {
   margin: auto;
   text-align: center;
   padding: 10px;
-  border: 2px solid grey;
-  border-radius: 25px;
-  box-shadow: 2px 2px;
- 
 }
 
 #mike {
