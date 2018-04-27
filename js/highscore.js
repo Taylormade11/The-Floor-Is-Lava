@@ -8,7 +8,11 @@ var fifthFill = document.getElementById('fifthScore');
 var sixthFill = document.getElementById('sixthScore');
 var seventhFill = document.getElementById('seventhScore');
 
-var highScore = {
+// HighScore.parsedArray = JSON.parse(localStorage.getItem('past'));
+// var array = HighScore.parsedArray || [];
+
+
+var HighScore = {
   1650000: 'MF',
   1350000: 'AB',
   1750000: 'AG',
@@ -19,14 +23,21 @@ var highScore = {
 
 };
 var sortable = [];
-for (var initials in highScore) {
-  sortable.push([parseInt(initials), highScore[parseInt(initials)]]);
+for (var initials in HighScore) {
+  sortable.push([parseInt(initials), HighScore[parseInt(initials)]]);
 }
 
 var storeGoal = localStorage.getItem('local-score');
 var storeInitial= localStorage.getItem('local-user-initials');
 sortable.push([parseInt(storeGoal), storeInitial]);
 sortable.sort(function(a, b){return b[0] - a[0];});
+
+var array =
+function storeArray() {
+  array = [storeGoal, storeInitial];
+  var myJSON = JSON.stringify(array);
+  localStorage.setItem('past', myJSON);
+};
 
 function tableContent() {
   firstFill.textContent = sortable[0][0] + ' ' + sortable[0][1];
@@ -39,4 +50,4 @@ function tableContent() {
 }
 
 tableContent();
-
+storeArray();
