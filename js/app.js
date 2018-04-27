@@ -3,6 +3,7 @@
 var thud = new Audio('audio/thud.wav');
 var sideways = new Audio('audio/step.wav');
 var jump = new Audio('audio/jump.wav');
+var scream = new Audio('audio/WilhelmScream.mp3');
 
 var spriteGuyImageRight = new Image(28,28);
 spriteGuyImageRight.src = 'assets/spacePirate.png';
@@ -246,7 +247,7 @@ function goalCollision() {
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
-    thud.play();
+    scream.play();
     gameScreen.stop();
     document.getElementById('lose-overlay').style.display = 'block';
   }
