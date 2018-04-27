@@ -224,11 +224,10 @@ function goalCollision() {
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
     score = score+500000;
-    localStorage.setItem('local-score', score);
     alert('You win!!!');
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
-
+    localStorage.setItem('local-score', score);
     document.getElementById('win-overlay').style.display = 'block';
   }
 }
