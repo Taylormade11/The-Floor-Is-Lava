@@ -154,8 +154,8 @@ var ourSpriteCharacter;
 var paused = false;
 
 var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/jump.wav');
-var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
@@ -227,13 +227,13 @@ function goalCollision() {
   score;
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    score = score+500000;
-    localStorage.setItem('local-score', score);
+    score = score + 500000;
 
     document.getElementById('win-overlay').style.display = 'block';
 
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
@@ -244,13 +244,12 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     score = 0;
-    localStorage.setItem('local-score', score);
-    console.log(score);
 
     document.getElementById('lose-overlay').style.display = 'block';
 
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
