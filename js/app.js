@@ -147,7 +147,6 @@ function renderDirt(){
 }
 
 var ourSpriteCharacter;
-var gameFloors;
 var paused = false;
 
 var thud = new Audio('audio/thud.wav');
@@ -160,7 +159,6 @@ function startGame() {
   gameScreen.start();
   renderLava();
   renderLevel();
-  renderblue();
 }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
