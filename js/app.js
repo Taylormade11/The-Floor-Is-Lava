@@ -18,13 +18,17 @@ var context = canvas.getContext('2d');
 var secs = 0;
 var score = null;
 var scoreInterval = setInterval(function(){
-  secs++;
-  score = startScore - (secs * 50000);
+  if (!paused) {
+    secs++;
+    score = startScore - (secs * 50000);
+  }
   var display = document.getElementById('time');
-  display.textContent = (40 -secs) + ' seconds ' + score;
+  display.textContent = (40 - secs) + ' seconds ' + score;
 }, 1000);
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
+
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
@@ -223,12 +227,13 @@ function goalCollision() {
   score;
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    score = score+500000;
-    alert('You win!!!');
+    score = score + 500000;
+
+    document.getElementById('win-overlay').style.display = 'block';
+
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
     localStorage.setItem('local-score', score);
-    document.getElementById('win-overlay').style.display = 'block';
   }
 }
 
@@ -239,13 +244,12 @@ function lavaCollision() {
     gameScreen.stop();
     thud.play();
     score = 0;
-    localStorage.setItem('local-score', score);
-    console.log(score);
-    alert('sorry you hit the lava, you lose');
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
 
     document.getElementById('lose-overlay').style.display = 'block';
+
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
@@ -298,10 +302,14 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
+
+    document.getElementById('pause-overlay').style.display = 'block';
     console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+  } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
+
+    document.getElementById('pause-overlay').style.display = 'none';
     console.log('unpaused');
   }
 }
@@ -356,8 +364,9 @@ function updateGameArea() {
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
-    ourSpriteCharacter.update();
   }
+
+  ourSpriteCharacter.update();
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
