@@ -4,8 +4,7 @@
     <title>The Floor is Lava</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <img src="assets/brick.png" class="tiles" id="brick-tile" width="32" height="32">
-    <img src="assets/lava.png" class="tiles" id="lava-tile" width="32" height="32">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   </head>
   <header id="indexHeader">
     <h1 class="rainbow-text">Welcome to The Floor is Lava!</h1>
@@ -26,7 +25,7 @@
   <body>
     <main>
       <div id="container" >
-      <p>Can you make it to the top?!</p>
+      <p id="toTheTop">Can you make it to the top?!</p>
         <p id="time"></p>
         <canvas id="game-screen">
         </canvas>
@@ -54,6 +53,7 @@
           <img id="leftArrow" src="assets/leftArrow.png"> Press Left or A to move left!<br>
           <img id="rightArrow" src="assets/rightArrow.png"> Press Right or D to move right!<br>
           <img id="upArrow" src="assets/upArrow.png"> Press Up or W to slow fall!<br>
+          <img id="letterP" src="assets/computer_key_P.png"> Press "P" to PAUSE!
         </aside>
         <audio controls autoplay="autoplay" loop="loop">
           <source src="audio/gamemusic.mp3" type="audio/mpeg">

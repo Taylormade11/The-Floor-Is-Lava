@@ -37,7 +37,7 @@ nav{
 }
 
 canvas {
-  background-image: url('../assets/Rough_Volcano.jpg');
+  background-image: url('../assets/Volcano_Lava_100.jpg');
 }
 
 nav ul {
@@ -71,7 +71,7 @@ nav button:hover {
 }
 
 #container {
-  padding-top: 150px;
+  padding-top: 100px;
   width: 90%;
   margin: auto;
   padding-bottom: 100px;
@@ -130,6 +130,11 @@ nav button:hover {
   width: 700px;
 }
 
+#letterP {
+  width: 20px;
+  height: 20px;
+}
+
 #lose-overlay button {
   background: none;
   font-size: 16px;
@@ -160,8 +165,16 @@ nav button:hover {
   -ms-transform: translate(-50%, -50%);
 }
 
+#time {
+  margin-left: 230px;
+}
+
+#toTheTop {
+  margin-left: 170px;
+}
+
 aside {
-  margin-top: 30px;
+  margin-top: -60px;
   float: right;
   height: 500px;
   width: 40%;
@@ -222,6 +235,7 @@ audio {
 .aboutusflex{
   display: flex;
   margin-bottom: 25px;
+
   }
   
 .aboutusflex div {
@@ -236,6 +250,7 @@ audio {
   margin-left: 15%;
   margin-right: 15%;
   margin-bottom: 75px;
+ 
   }
 
 .aboutusflextwo div {
@@ -243,6 +258,7 @@ audio {
   justify-content: space-around;
   margin: auto;
   text-align: center;
+ 
 }
 
 table * {
