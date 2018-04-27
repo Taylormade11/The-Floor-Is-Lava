@@ -13,7 +13,9 @@ var HighScore = {
   2100000: 'TE',
   2050000: 'MAK',
   2000000: 'CCH',
-  1900000: 'GB'
+  1900000: 'GB',
+  1650000: 'AG',
+  1400000: 'AB',
 };
 var sortable = [];
 for (var initials in HighScore) {

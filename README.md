@@ -39,6 +39,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 * Volvion - [theme music](https://freesound.org/people/Volvion/sounds/265308/)
 
+* mind_noise [scream]
+(https://archive.org/details/WilhelmScreamSample)
+
 ## Acknowledgements
 
 * Mariya Dudyshyn - Custom Background Volcano Art - [MariStoryArt](http://www.maristoryart.com/)
