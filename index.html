@@ -4,46 +4,66 @@
     <title>The Floor is Lava</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <img src="assets/brick.png" class="tiles" id="brick-tile" width="32" height="32">
-    <img src="assets/lava.png" class="tiles" id="lava-tile" width="32" height="32">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   </head>
   <header id="indexHeader">
     <h1 class="rainbow-text">Welcome to The Floor is Lava!</h1>
     <nav>
       <ul>
-        <li><button>
-            <a href="index.html" id="home">Home</a>
-          </button></li>
-        <li><button>
-            <a href="about-us.html" id="about-us">About Us</a>
-          </button></li>
-        <li><button>
-            <a href="high-score.html" id="game-stats">Game Stats</a>
-          </button></li>
+        <li>
+          <button><a href="index.html" id="home">Home</a></button>
+        </li>
+        <li>
+          <button><a href="about-us.html" id="about-us">About Us</a></button>
+        </li>
+        <li>
+          <button><a href="high-score.html" id="game-stats">Game Stats</a></button>
+        </li>
       </ul>
     </nav>
   </header>
   <body>
     <main>
-      <div id="container">
-        <canvas id="game-screen"></canvas>
+      <div id="container" >
+      <p id="toTheTop">Can you make it to the top?!</p>
+        <p id="time"></p>
+        <canvas id="game-screen">
+        </canvas>
+        <div id="win-overlay">
+          <p>WINNER</p>
+          <button><a href="high-score.html" class="rainbow-text">HIGH SCORES</a></button>
+        </div>
+        <div id="lose-overlay">
+          <p>SORRY, BETTER LUCK NEXT TIME</p>
+          <button><a href="index.html" class="rainbow-text">Try Again?</a></button>
+        </div>
+        <div id="pause-overlay">
+          <p>GAME PAUSED</p>
+        </div>
         <aside>
-          <h2>Description of Game/Instructions</h2>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum hic facilis odit, minima ea aspernatur tempore corrupti maiores magni. Porro pariatur nobis cumque quia alias provident perspiciatis, officia molestias ipsa.</p>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum hic facilis odit, minima ea aspernatur tempore corrupti maiores magni. Porro pariatur nobis cumque quia alias provident perspiciatis, officia molestias ipsa.</p>
-          <ul> Can you make it to the top?!
-            <li id="time"></li>
-          </ul>
+          <h2>Instructions</h2>
+          <p id="instructions">Your goal is to reach the top of the screen and pass through the goal.<br>
+          <p>There’s 40 seconds on the clock and points are being deducted for every second you wait so we suggest you move fast!</p>
+          <p>Falling in the lava stops the clock, resultingin zero points.</p>
+          <p>Don’t forget to enter your name at the end to see how you rank against our top players.</p> <p>Remember</p>
+          <p>DON’T FALL IN THE LAVA!</p><br><br>
+          <p id="controls"></p>
+          <h2>Controls</h2>
+          <img id="spacebar" src="assets/spacebar.png"> Press Spacebar jump!<br>
+          <img id="leftArrow" src="assets/leftArrow.png"> Press Left or A to move left!<br>
+          <img id="rightArrow" src="assets/rightArrow.png"> Press Right or D to move right!<br>
+          <img id="upArrow" src="assets/upArrow.png"> Press Up or W to slow fall!<br>
+          <img id="letterP" src="assets/computer_key_P.png"> Press "P" to PAUSE!
         </aside>
         <audio controls autoplay="autoplay" loop="loop">
-            <source src="audio/BoxCat_Games_-_12_-_Passing_Time.mp3" type="audio/mpeg">
+          <source src="audio/gamemusic.mp3" type="audio/mpeg">
         </audio>
       </div>
     </main>
     <footer>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum hic facilis odit, minima ea aspernatur tempore corrupti maiores magni. Porro pariatur nobis cumque quia alias provident perspiciatis, officia molestias ipsa.</p>
-      <script src="js/app.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+      <p>CodeFellows 2018</p>
     </footer>
+    <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
   </body>
 </html>

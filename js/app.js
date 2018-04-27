@@ -1,56 +1,94 @@
 'use strict';
+
+var thud = new Audio('audio/thud.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
+
+var spriteGuyImageRight = new Image(28,28);
+spriteGuyImageRight.src = 'assets/spacePirate.png';
+
+var spriteGuyImageLeft = new Image(28,28);
+spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
+
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+var grassSrc = new Image();
+grassSrc.src = 'assets/grassdirt.png';
+
+var tileSrc = new Image();
+tileSrc.src = 'assets/darkstone.png';
+
+var clearSrc = new Image();
+clearSrc.src = 'assets/clear.png';
+
+var dirtSrc = new Image();
+dirtSrc.src = 'assets/dirt.png';
+
+var ourSpriteCharacter;
+var paused = false;
 var userInitials = '';
 var startScore = 2000000;
+var spriteGrounded = false;
+var secs = 0;
+var score = null;
+var jumpDelay = 0;
+var pauseDelay = 0;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
+
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
-var secs = 0;
-var score = null;
 var scoreInterval = setInterval(function(){
-  secs++;
-  score = startScore - (secs * 50000);
   var display = document.getElementById('time');
-  display.textContent = secs + ' seconds ' + score;
+  if (!paused && secs < 40) {
+    secs++;
+    score = startScore - (secs * 50000);
+  }
+  if (score > 0) {
+    display.textContent = (40 - secs) + ' seconds left! Score: ' + score;
+  }
+  if (score === 0) {
+    display.textContent = (40 - secs) + ' seconds left! Score: 00000000';
+  }
 }, 1000);
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
+
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
 
-var jumpDelay = 0;
-var pauseDelay = 0;
-
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2],
-  [1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,2,2,2],
-  [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],
-  [1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-  [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1],
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2],
+  [2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2],
+  [2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4,7,1],
+  [2,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,4,7,7,1],
+  [2,0,6,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,7,7,7,1],
+  [2,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
-
-var tileSrc = new Image();
-tileSrc.src = 'assets/brick.png';
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -63,12 +101,11 @@ function renderLevel(){
   }
 }
 
-function renderblue(){
-  context.fillStyle='#00FFFF';
+function renderClear(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===2){
-        context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -85,33 +122,54 @@ function renderLava(){
   }
 }
 
-// renderLava();
+function renderGrass(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===4){
+        context.drawImage(grassSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
 
-var ourSpriteCharacter;
-var gameFloors;
-var paused = false; // Game starts in a paused state
+function renderGoal(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===5){
+        context.drawImage(goalSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
 
-var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/jump.wav');
-var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+function renderSign(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===6){
+        context.drawImage(signSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+
+function renderDirt(){
+  for(var i=0; i < levelRow; i++){
+    for(var j=0; j < levelColumn; j++){
+      if(levelMap[i][j]===7){
+        context.drawImage(dirtSrc, j*tileSize, i*tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
-  ourSpriteCharacter = new Sprite(27, 27, 60, 400);
-  // gameFloors = new CreateFloor(7150, 40, 0, 540);
+  ourSpriteCharacter = new Sprite(28, 28, 60, 400);
   gameScreen.start();
   renderLava();
   renderLevel();
-  renderblue();
 }
-
-// // Creates floor with parameters fed, may be able to feed it multiple blocks and compare all floors for object detection at one time.
-// function CreateFloor(width, height, x, y) {
-//   var canvas = document.getElementById('game-screen');
-//   var ctx = canvas.getContext('2d');
-//   ctx.fillStyle = 'red';
-//   ctx.fillRect(x, y, width, height);
-// }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
 var gameScreen = {
@@ -158,8 +216,11 @@ function Sprite(width, height, x, y) {
   this.gravity = 4;
   this.update = function() {
     var ctx = gameScreen.context;
-    ctx.fillStyle = 'white';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    if (ourSpriteCharacter.speedX >= 0) {
+      ctx.drawImage(spriteGuyImageRight, this.x, this.y, this.width, this.height);
+    } else if (ourSpriteCharacter.speedX < 0) {
+      ctx.drawImage(spriteGuyImageLeft, this.x, this.y, this.width, this.height);
+    }
   };
   this.updatedPosition = function() {
     this.x += this.speedX;
@@ -170,28 +231,24 @@ function Sprite(width, height, x, y) {
 // Looks for a collision with the goal - to stop the clock and beat the game
 function goalCollision() {
   score;
-  if (ourSpriteCharacter.y <= (tileSize * 2) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
+  if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    score = score+500000;
-    localStorage.setItem('local-score', score);
-    alert('You win!!!');
+    score = score + 500000;
+
+    document.getElementById('win-overlay').style.display = 'block';
+
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
-  if (ourSpriteCharacter.y > 540) {
-    console.log('sorry you hit the lava, you lose');
-    gameScreen.stop();
+  if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
     thud.play();
-    score = 0;
-    localStorage.setItem('local-score', score);
-    console.log(score);
-    alert('sorry you hit the lava, you lose');
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
+    gameScreen.stop();
+    document.getElementById('lose-overlay').style.display = 'block';
   }
 }
 
@@ -199,6 +256,8 @@ function lavaCollision() {
 function cielCollision() {
   if (ourSpriteCharacter.y <= 0 + tileSize) {
     ourSpriteCharacter.y = 0 + tileSize;
+    ourSpriteCharacter.speedY = 1;
+    jumpDelay = 0;
     thud.play(); }
 }
 
@@ -213,6 +272,7 @@ function wallCollision() {
   if(ourSpriteCharacter.speedY<=0){
     if((levelMap[baseRow+1][baseCol] && !levelMap[baseRow][baseCol]) || (levelMap[baseRow+1][baseCol+1] && !levelMap[baseRow][baseCol+1] && colOverlap)){
       ourSpriteCharacter.y=(baseRow)*tileSize;
+      spriteGrounded = true;
     }
   }
 
@@ -241,11 +301,11 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
-    console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+    document.getElementById('pause-overlay').style.display = 'block';
+  } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
-    console.log('unpaused');
+    document.getElementById('pause-overlay').style.display = 'none';
   }
 }
 
@@ -259,31 +319,49 @@ function spriteMovement() {
     ourSpriteCharacter.speedX = 3;
     sideways.play();
   }
-  if (jumpDelay === 0 && gameScreen.pressed && gameScreen.pressed[32]) {
+  if (jumpDelay === 0 && spriteGrounded === true && gameScreen.pressed && gameScreen.pressed[32]) {
     jump.play();
     jumpDelay += 1200;
+    spriteGrounded = false;
   } if (jumpDelay > 400 && jumpDelay <= 1200) {
     ourSpriteCharacter.speedY = -7;
   } else {
     ourSpriteCharacter.speedY = 0;
+  }
+  if (gameScreen.pressed && (gameScreen.pressed[38] || gameScreen.pressed[87])) {
+    ourSpriteCharacter.speedY = -1.8;
+  }
+}
+
+// Defines the friction to be applied when the sprite is moved across the x-axis
+function spriteFriction() {
+  if (spriteGrounded === true && ourSpriteCharacter.speedX > 0) {
+    ourSpriteCharacter.speedX -= .5;
+  } else if (spriteGrounded === true && ourSpriteCharacter.speedX < 0) {
+    ourSpriteCharacter.speedX += .5;
   }
 }
 
 // updates game-screen and clears old images so it isn't drawing lines with the past square's locations. Listens for A & D or Left and Right arrows for X axis movement. Listens for spacebar for jump / negative Y movement. Every time you jump it sets the Jump delay to 400 ms and then each clear loop decrements the jump delay 25ms until it is 0 again. Can not jump unless jumpDelay is back to 0. Redraws floor because of the clear, but we can only clear above the floor with the right measurements so it only has to be drawn once.
 function updateGameArea() {
   renderLevel();
-  renderblue();
+  renderGrass();
+  renderGoal();
+  renderSign();
+  renderClear();
   renderLava();
+  renderDirt();
   gameScreen.clear();
+
+  spriteFriction();
   spriteMovement();
 
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
-    ourSpriteCharacter.update();
   }
 
-  // CreateFloor(7150, 40, 0, 560);
+  ourSpriteCharacter.update();
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();
@@ -294,10 +372,8 @@ function updateGameArea() {
   // Checks if sprite has impacted internal blocks or side walls;
   wallCollision();
 
+  // Checks if sprite has impacted the goal
   goalCollision();
 }
 
 startGame();
-renderLevel();
-renderblue();
-renderLava();

@@ -29,13 +29,15 @@ nav{
   background-color: black;
   margin-bottom: 30px;
   display: block;
-  /* float: right; */
 }
 
 #gameScreen {
   padding-top: 50px;
   margin-top: 30px;
-  background-color: white;
+}
+
+canvas {
+  background-image: url('../assets/Volcano_Lava_100.jpg');
 }
 
 nav ul {
@@ -69,28 +71,155 @@ nav button:hover {
 }
 
 #container {
-  padding-top: 150px;
-  width: 80%;
+  padding-top: 100px;
+  width: 90%;
   margin: auto;
   padding-bottom: 100px;
+  /* position: relative; */
+}
+
+#win-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+  font-size: 30px;
+  top: 443px;
+  height: 600px;
+  width: 750px;
+  position: absolute;
+  text-align: center;
+}
+#win-overlay p {
+  background: none;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#win-overlay button {
+  background: none;
+  font-size: 16px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#lose-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+  top: 443px;
+  height: 600px;
+  width: 750px;
+  position: absolute;
+  text-align: center;
+}
+
+#lose-overlay p {
+  background: none;
+  font-size: 20px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 700px;
+}
+
+#letterP {
+  width: 20px;
+  height: 20px;
+}
+
+#lose-overlay button {
+  background: none;
+  font-size: 16px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#pause-overlay {
+  background: none;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+  font-size: 30px;
+  top: 443px;
+  height: 600px;
+  width: 750px;
+  position: absolute;
+  text-align: center;
+}
+#pause-overlay p {
+  background: none;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#time {
+  margin-left: 125px;
+}
+
+#toTheTop {
+  margin-left: 155px;
 }
 
 aside {
-  margin-top: 30px;
+  margin-top: -60px;
   float: right;
   height: 500px;
   width: 40%;
+  padding-right: 1%;
 }
 
 aside h2 {
-  font-size: 26px;
+  font-size: 32px;
   margin: 10px 0px;
   text-align: center;
 }
 
 aside p {
-  font-size: 20px;
+  font-size: 19px;
+  line-height: 20px;
   text-align: center;
+}
+
+#controls {
+  line-height: 35px;
+  text-align: left;
+}
+
+#spacebar {
+  height: 20px;
+  width: 75px;
+  padding-top: 5px;
+}
+
+#rightArrow {
+  height: 20px;
+  width: 20px;
+  padding-top: 5px;
+}
+
+#leftArrow {
+  height: 20px;
+  width: 20px;
+  padding-top: 5px;
+}
+
+#upArrow {
+  height: 20px;
+  width: 20px; 
+  padding-top: 5px;
 }
 
 audio {
@@ -98,7 +227,7 @@ audio {
 }
 
 #aboutUsHeader {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   margin-top: 60px;
   font-size: 3rem;
 }
@@ -106,29 +235,39 @@ audio {
 .aboutusflex{
   display: flex;
   margin-bottom: 25px;
+
   }
   
 .aboutusflex div {
-  width: 25%;
+  width: 30%;
   justify-content: space-around;
   margin: auto;
   text-align: center;
+  height: 400px;
+  padding:10px;
+  font-size: 1rem;
 }
 
 .aboutusflextwo{
   display: flex;
   margin-left: 15%;
   margin-right: 15%;
-  margin-bottom: 75px;
+  margin-bottom: 50px;
+ 
   }
 
 .aboutusflextwo div {
-  width: 25%;
+  width: 40%;
+  height: 400px;
   justify-content: space-around;
   margin: auto;
   text-align: center;
+  padding: 10px;
 }
 
+#mike {
+  font-size: .9rem;
+}
 table * {
   margin-top: 50px;
   padding: 20px;
@@ -154,7 +293,7 @@ tfoot td:hover {
 #scoreTable {
   width: 80%;
   margin: auto;
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 #firstScore {
@@ -195,6 +334,10 @@ div img{
   border-radius: 25%;
 }
 
+a {
+  text-decoration: none;
+}
+
 a:hover {
   color: lime;
 }
@@ -211,6 +354,50 @@ footer {
   width: 80%;
   text-align: center;
   margin: auto;
+}
+
+@media (max-width: 1500px) {
+  aside {
+    margin-top: 30px;
+    float: right;
+    height: 500px;
+    width: 35%;
+    margin-left: 1%;
+    padding-right: 0%;
+  }
+  
+  aside h2 {
+    font-size: 26px;
+    margin: 10px 0px;
+    text-align: center;
+  }
+  
+  aside p {
+    font-size: 17px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1320px) {
+  aside {
+    margin-top: 30px;
+    float: right;
+    height: 500px;
+    width: 30%;
+    margin-left: 1%;
+    padding-right: 0%;
+  }
+  
+  aside h2 {
+    font-size: 26px;
+    margin: 10px 0px;
+    text-align: center;
+  }
+  
+  aside p {
+    font-size: 12px;
+    text-align: center;
+  }
 }
 
 @keyframes High-Score {
