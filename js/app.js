@@ -244,9 +244,6 @@ function lavaCollision() {
     thud.play();
     gameScreen.stop();
     document.getElementById('lose-overlay').style.display = 'block';
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
-    localStorage.setItem('local-score', score);
   }
 }
 
