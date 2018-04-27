@@ -46,12 +46,17 @@ var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
 var scoreInterval = setInterval(function(){
-  if (!paused) {
+  var display = document.getElementById('time');
+  if (!paused && secs < 40) {
     secs++;
     score = startScore - (secs * 50000);
   }
-  var display = document.getElementById('time');
-  display.textContent = (40 - secs) + ' seconds ' + score;
+  if (score > 0) {
+    display.textContent = (40 - secs) + ' seconds left! Score: ' + score;
+  }
+  if (score === 0) {
+    display.textContent = (40 - secs) + ' seconds left! Score: 00000000';
+  }
 }, 1000);
 
 // size of the tiles (platforms) to be drawn
