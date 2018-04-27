@@ -1,63 +1,89 @@
 'use strict';
+
+var thud = new Audio('audio/thud.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
+
+var spriteGuyImageRight = new Image(28,28);
+spriteGuyImageRight.src = 'assets/spacePirate.png';
+
+var spriteGuyImageLeft = new Image(28,28);
+spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
+
+var goalSrc = new Image();
+goalSrc.src = 'assets/goal.png';
+
+var signSrc = new Image();
+signSrc.src = 'assets/direction.png';
+
+var grassSrc = new Image();
+grassSrc.src = 'assets/grassdirt.png';
+
+var tileSrc = new Image();
+tileSrc.src = 'assets/darkstone.png';
+
+var clearSrc = new Image();
+clearSrc.src = 'assets/clear.png';
+
+var dirtSrc = new Image();
+dirtSrc.src = 'assets/dirt.png';
+
+var ourSpriteCharacter;
+var paused = false;
 var userInitials = '';
 var startScore = 2000000;
 var spriteGrounded = false;
-
-var spriteGuyImageRight = new Image(27,27);
-spriteGuyImageRight.src = 'assets/spacePirate.png';
-
-var spriteGuyImageLeft = new Image(27,27);
-spriteGuyImageLeft.src = 'assets/spacePirateLeft.png';
+var secs = 0;
+var score = null;
+var jumpDelay = 0;
+var pauseDelay = 0;
 
 //select the id for canvas to draw to
 var canvas = document.getElementById('game-screen');
+
 // sets the context of the canvas to 2d
 var context = canvas.getContext('2d');
 
 // Calculates player's score - decrements over time
-var secs = 0;
-var score = null;
 var scoreInterval = setInterval(function(){
-  secs++;
-  score = startScore - (secs * 50000);
+  if (!paused) {
+    secs++;
+    score = startScore - (secs * 50000);
+  }
   var display = document.getElementById('time');
-  display.textContent = (40 -secs) + ' seconds ' + score;
+  display.textContent = (40 - secs) + ' seconds ' + score;
 }, 1000);
+
 // size of the tiles (platforms) to be drawn
 var tileSize = 30;
+
 // variable for size of columns and rows on levelMap
 var levelColumn = 25;
 var levelRow = 20;
 
-var jumpDelay = 0;
-var pauseDelay = 0;
-
 // tile map for level 1 is black block rest are white
 var levelMap = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 1],
-  [1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 7, 7, 1],
-  [1, 0, 6, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 7, 7, 7, 1],
-  [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2],
+  [2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2],
+  [2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+  [2,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2],
+  [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2],
+  [2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4,7,1],
+  [2,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,4,7,7,1],
+  [2,0,6,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,7,7,7,1],
+  [2,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
-
-var tileSrc = new Image();
-tileSrc.src = 'assets/darkstone.png';
 
 function renderLevel(){
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -70,12 +96,11 @@ function renderLevel(){
   }
 }
 
-function renderblue(){
-  context.fillStyle='#00FFFF';
+function renderClear(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j <levelColumn; j++){
       if(levelMap[i][j]===2){
-        context.fillRect(j*tileSize, i*tileSize, tileSize, tileSize);
+        context.drawImage(tileSrc, j*tileSize, i*tileSize, tileSize, tileSize);
       }
     }
   }
@@ -92,9 +117,6 @@ function renderLava(){
   }
 }
 
-var grassSrc = new Image();
-grassSrc.src = 'assets/grassdirt.png';
-
 function renderGrass(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j < levelColumn; j++){
@@ -104,9 +126,6 @@ function renderGrass(){
     }
   }
 }
-
-var goalSrc = new Image();
-goalSrc.src = 'assets/goal.png';
 
 function renderGoal(){
   for(var i=0; i < levelRow; i++){
@@ -118,9 +137,6 @@ function renderGoal(){
   }
 }
 
-var signSrc = new Image();
-signSrc.src = 'assets/direction.png';
-
 function renderSign(){
   for(var i=0; i < levelRow; i++){
     for(var j=0; j < levelColumn; j++){
@@ -131,8 +147,6 @@ function renderSign(){
   }
 }
 
-var dirtSrc = new Image();
-dirtSrc.src = 'assets/dirt.png';
 
 function renderDirt(){
   for(var i=0; i < levelRow; i++){
@@ -144,21 +158,12 @@ function renderDirt(){
   }
 }
 
-var ourSpriteCharacter;
-var gameFloors;
-var paused = false;
-
-var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/jump.wav');
-var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
-
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
-  ourSpriteCharacter = new Sprite(27, 27, 60, 400);
+  ourSpriteCharacter = new Sprite(28, 28, 60, 400);
   gameScreen.start();
   renderLava();
   renderLevel();
-  renderblue();
 }
 
 // Grabs our game-screen canvas, sets h/w and context. Sets interval timing to run function every 25ms and event listeners on the entire window for events. Individual listeners at the bottom of the page for single button actions.
@@ -223,26 +228,25 @@ function goalCollision() {
   score;
   if (ourSpriteCharacter.y <= (tileSize * 2.5) && ourSpriteCharacter.x >= canvas.width - (tileSize * 3)) {
     gameScreen.stop();
-    score = score+500000;
-    localStorage.setItem('local-score', score);
-    alert('You win!!!');
+    score = score + 500000;
+
+    document.getElementById('win-overlay').style.display = 'block';
+
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
 // Looks for a lavaCollision between the Sprite y location, if it reaches where the edge of the floor is drawn it console logs a loss message and prompts alert and stops the updating... or form to enter name into for highscore?
 function lavaCollision() {
   if (ourSpriteCharacter.y + ourSpriteCharacter.height > canvas.height - tileSize) {
-    console.log('sorry you hit the lava, you lose');
-    gameScreen.stop();
     thud.play();
-    score = 0;
-    localStorage.setItem('local-score', score);
-    console.log(score);
-    alert('sorry you hit the lava, you lose');
+    gameScreen.stop();
+    document.getElementById('lose-overlay').style.display = 'block';
     userInitials = prompt('Please Enter Initials').toUpperCase();
     localStorage.setItem('local-user-initials', userInitials);
+    localStorage.setItem('local-score', score);
   }
 }
 
@@ -295,11 +299,11 @@ function togglePause() {
   if (!paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = true;
     pauseDelay += 1200;
-    console.log('paused');
-  } else if (paused && pauseDelay ===0 &&gameScreen.pressed && gameScreen.pressed[80]) {
+    document.getElementById('pause-overlay').style.display = 'block';
+  } else if (paused && pauseDelay === 0 && gameScreen.pressed && gameScreen.pressed[80]) {
     paused = false;
     pauseDelay += 300;
-    console.log('unpaused');
+    document.getElementById('pause-overlay').style.display = 'none';
   }
 }
 
@@ -342,7 +346,7 @@ function updateGameArea() {
   renderGrass();
   renderGoal();
   renderSign();
-  renderblue();
+  renderClear();
   renderLava();
   renderDirt();
   gameScreen.clear();
@@ -353,8 +357,9 @@ function updateGameArea() {
   togglePause();
   if (paused === false) {
     ourSpriteCharacter.updatedPosition();
-    ourSpriteCharacter.update();
   }
+
+  ourSpriteCharacter.update();
 
   // Checks if sprite has impacted the ceiling (top row of blocks)
   cielCollision();

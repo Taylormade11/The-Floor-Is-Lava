@@ -30,6 +30,17 @@
         <p id="time"></p>
         <canvas id="game-screen">
         </canvas>
+        <div id="win-overlay">
+          <p>WINNER</p>
+          <button><a href="high-score.html" class="rainbow-text">HIGH SCORES</a></button>
+        </div>
+        <div id="lose-overlay">
+          <p>SORRY, BETTER LUCK NEXT TIME</p>
+          <button><a href="index.html" class="rainbow-text">Try Again?</a></button>
+        </div>
+        <div id="pause-overlay">
+          <p>GAME PAUSED</p>
+        </div>
         <aside>
           <h2>Instructions</h2>
           <p id="instructions">Your goal is to reach the top of the screen and pass through the goal.<br>
@@ -45,14 +56,14 @@
           <img id="upArrow" src="assets/upArrow.png"> Press Up or W to slow fall!<br>
         </aside>
         <audio controls autoplay="autoplay" loop="loop">
-          <source src="audio/BoxCat_Games_-_12_-_Passing_Time.mp3" type="audio/mpeg">
+          <source src="audio/gamemusic.mp3" type="audio/mpeg">
         </audio>
       </div>
     </main>
     <footer>
-      <p>CodeFellows 2018 ©</p>
-      <script src="js/app.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+      <p>CodeFellows 2018</p>
     </footer>
+    <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
   </body>
 </html>
