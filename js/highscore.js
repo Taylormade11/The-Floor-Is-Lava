@@ -28,7 +28,7 @@ for (var initials in HighScore) {
 }
 
 var userInitials= localStorage.getItem('local-user-initials');
-var userScore = localStorage.getItem('User Score');
+var userScore = localStorage.getItem('local-score');
 
 // var parsedUser = JSON.parse('Current User');
 
