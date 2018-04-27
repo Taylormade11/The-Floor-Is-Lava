@@ -225,11 +225,11 @@ function goalCollision() {
     gameScreen.stop();
     score = score+500000;
     localStorage.setItem('local-score', score);
-    alert('You win!!!');
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
 
     document.getElementById('win-overlay').style.display = 'block';
+
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
@@ -242,11 +242,11 @@ function lavaCollision() {
     score = 0;
     localStorage.setItem('local-score', score);
     console.log(score);
-    alert('sorry you hit the lava, you lose');
-    userInitials = prompt('Please Enter Initials').toUpperCase();
-    localStorage.setItem('local-user-initials', userInitials);
 
     document.getElementById('lose-overlay').style.display = 'block';
+
+    userInitials = prompt('Please Enter Initials').toUpperCase();
+    localStorage.setItem('local-user-initials', userInitials);
   }
 }
 
