@@ -150,8 +150,8 @@ var ourSpriteCharacter;
 var paused = false;
 
 var thud = new Audio('audio/thud.wav');
-var sideways = new Audio('audio/jump.wav');
-var jump = new Audio('audio/124902__greencouch__beeps-231.wav');
+var sideways = new Audio('audio/step.wav');
+var jump = new Audio('audio/jump.wav');
 
 // Starts the game by creating our Sprite, rendering the floor(s) & the start method of our gamescreen object.
 function startGame() {
